@@ -4,7 +4,7 @@ const express = require('express') //used to talk to client
 const https = require('https'); //used to talk to server
 const mongoose = require('mongoose');
 json_cities = require('./data.js');
-
+const cors = require('cors');
 
 mongoose.connect("mongodb://localhost:27017/test",
     {useNewUrlParser: true, useUnifiedTopology: true});
@@ -17,6 +17,10 @@ const cityModel = mongoose.model("cities", citySchema);
 
 //create an instance of express
 const app = express()
+
+app.use(cors({
+    origin: '*'
+}));
 
 //allows us to use the property req.body to get the entered city name
 app.use(bodyparser.urlencoded({
@@ -61,29 +65,6 @@ app.get('/contact', function (req, res) {
 })
 
 app.use(bodyparser.json());
-
-app.get('/cities', (req, res) => {
-    const cities = [];
-    // code to retrieve all cities...
-    res.json(cities);
-});
-
-app.post('/cities', (req, res) => {
-    // code to add a new city...
-    res.json(req.body);
-});
-
-app.put('/cities/:name', (req, res) => {
-    const { name } = req.params;
-    // code to update a city...
-    res.json(req.body);
-});
-
-app.delete('/cities/:name', (req, res) => {
-    const { name } = req.params;
-    // code to delete a city...
-    res.json({ deleted: id });
-});
 
 app.get('/cities/:city_name', function(req, res) {
     console.log("received a request for "+ req.params.city_name);
