@@ -88,7 +88,24 @@ app.get('/cities', function(req, res) {
     });
 })
 
-app.put("/insert", function(req, res){
+app.put("/update", function(req, res){
+    cityModel.findOneAndUpdate({
+        name : req.body.name
+    },{
+        name : req.body.name,
+        temperature : req.body.temperature,
+        description: req.body.description
+    },{
+      new: true
+    }, function(err, data){
+        if(err) console.log(err);
+        else
+            console.log(data);
+        res.send("All good! Updated")
+    });
+})
+
+app.post("/insert", function(req, res){
     cityModel.create({
         name : req.body.name,
         temperature : req.body.temperature,
