@@ -97,12 +97,12 @@ app.put("/insert", function(req, res){
         if(err) console.log(err);
         else
             console.log(data);
-        res.send("All good! Inserted.")
+        res.send("All good! Inserted")
     });
 })
 app.delete("/delete/:city_name", function(req, res){
     cityModel.remove({
-        name : req.body.name
+        name : req.params.city_name
     }, function(err, data){
         if(err) console.log(err);
         else
