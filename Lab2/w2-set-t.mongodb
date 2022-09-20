@@ -1,0 +1,98 @@
+use("test")
+
+//SEARCHING COLLECTIONS
+
+db.unicorns.find()
+
+db.unicorns.find({ //selection
+    gender: "f",
+    weight: {$gt : 500} //using selector for greater than
+}, { //projection --> fields returned after query; default is all fields
+    name : true, //takes a boolean as a value (can be 0 or 1)
+    _id : false //special case for _id, which is on by default and manually needs to be set to false
+})
+
+db.unicorns.find({
+    vampires : {$exists: false} //selects documents that don't have the "vampires" field
+})
+
+db.unicorns.find({
+    loves: {$in: ["apple", "carrot"]} //the $in selector takes an array and returns a match if the field equals or contains a value in the array
+}).count() //returns match count
+
+db.unicorns.find({
+    name: {$in: ["Aurora", "Pilot"]}
+})
+
+db.unicorns.find({
+    $or : [ //$or selector takes an array of selection statements and matches any of them
+        {gender : "f"},
+        {loves : {$in: ["apple"]}}
+    ]
+})
+
+db.unicorns.find({
+    $and: [ //$and is the same structure as $or, but with AND logic
+        {gender : "f"},
+        {$or : [
+                {loves : {$in : ["apple"]}},
+                {weight : {$lt : 500}}
+                ]
+        }
+    ]
+})
+
+//UPDATING COLLECTIONS
+
+db.unicorns.update({ //update takes a selector and an updated document
+    name: 'Roooooodles'
+},{
+    $set: { //use the $set selector to specify fields to update; unspecified fields will be left the same
+        dob: new Date(1979, 7, 18, 18, 44),
+        loves: ['banana'],
+        gender: 'm',
+        weight : 590,
+        vampires: 99
+    }
+})
+
+db.unicorns.find({
+    name: 'Roooooodles'
+})
+
+db.unicorns.update({
+    name : 'Roooooodles'
+}, { //can include multiple selectors in updated document
+    $inc : { //$inc will increment the specified fields by a value
+        vampires : -2,
+        weight : 2
+    },
+    $push : {loves : "sugar"} //push will add a value to an array field
+})
+
+db.unicorns.find({
+    name: 'Roooooodles'
+})
+
+db.hits.update({ //attempting to update a non-existent document
+    page : 'unicorns'
+},{
+    $inc : {hits: 1}
+}, {
+    upsert : true //will insert new document that match selector fields if not found
+})
+
+db.hits.find()
+
+//multi wasn't recognized, so used an alternative
+//will update multiple documents that match selection object
+db.unicorns.updateMany({}, //if an empty object is passed as selector, select all
+    {$set: {vaccinated: true }})
+
+db.unicorns.find();
+
+//find all unicorns, sort by weight (least to greatest), exclude first entry, then only show first 2 entries
+db.unicorns.find().sort({weight : 1}).skip(1).limit(2)
+
+//returns same rows as above statement
+db.unicorns.find().sort({weight : 1}).limit(2).skip(1)
