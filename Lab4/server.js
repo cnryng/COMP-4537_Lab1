@@ -21,7 +21,7 @@ const unicornModel = mongoose.model('unicorns', unicornSchema); // unicorns is t
 
 app.listen(process.env.PORT || port, async () => {
         try {
-            await mongoose.connect('mongodb://localhost:27017/test')
+            await mongoose.connect("mongodb+srv://test-user:9pmeJjRNqtysbXZF@testcluster.lcqmg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
         } catch (error) {
             console.log('db error');
         }
