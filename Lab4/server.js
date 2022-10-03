@@ -19,7 +19,7 @@ const unicornSchema = new Schema({
 
 const unicornModel = mongoose.model('unicorns', unicornSchema); // unicorns is the name of the collection in db
 
-app.listen(port, async () => {
+app.listen(process.env.PORT || port, async () => {
         try {
             await mongoose.connect('mongodb://localhost:27017/test')
         } catch (error) {
