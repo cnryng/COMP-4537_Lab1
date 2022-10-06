@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const https = require('https');
 
 const app = express();
@@ -29,44 +30,39 @@ app.listen(process.env.PORT || 5000, async () => {
             let parsedData = JSON.parse(rawData);
             parsedData.map(element => possibleTypes.push(element.english));
             console.log(possibleTypes)
+            pokemonSchema = new Schema({
+                "id": {
+                    type: Number,
+                    unique: true
+                },
+                "name": {
+                    "english": String,
+                    "japanese": String,
+                    "chinese": String,
+                    "french": String
+                },
+                "base": {
+                    "HP": Number,
+                    "Attack": Number,
+                    "Defense": Number,
+                    "Sp Attack": Number,
+                    "Sp Defense": Number,
+                    "Speed": Number
+                },
+                "type":  {
+                    type: [String],
+                    enum: possibleTypes
+                }
+            });
+            pokemonModel = mongoose.model('pokemon', pokemonSchema);
         })
     })
-
-    pokemonSchema = new Schema({
-        "id": {
-            type: Number,
-            unique: true
-        },
-        "name": {
-            "english": String,
-            "japanese": String,
-            "chinese": String,
-            "french": String
-        },
-        "base": {
-            "HP": Number,
-            "Attack": Number,
-            "Defense": Number,
-            "Sp Attack": Number,
-            "Sp Defense": Number,
-            "Speed": Number
-        },
-        "type": [
-            {
-                type: String,
-                enum: possibleTypes
-            }
-        ],
-    });
-
-    pokemonModel = mongoose.model('pokemon', pokemonSchema);
 
     function renameSpecialStats(obj) {
         obj["base"]["Sp Attack"] = obj["base"]["Sp. Attack"];
         delete obj["base"]["Sp. Attack"];
         obj["base"]["Sp Defense"] = obj["base"]["Sp. Defense"] ;
         delete obj["base"]["Sp. Defense"];
-        console.log(JSON.stringify(obj));
     }
 
     await https.get("https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/pokedex.json", async (res) => {
@@ -82,7 +78,7 @@ app.listen(process.env.PORT || 5000, async () => {
     })
 
     // await pokemonModel.create({
-    //     "id": 2,
+    //     "id": 999,
     //     "name": {
     //         "english": "Venusaur",
     //         "japanese": "フシギバナ",
@@ -90,7 +86,7 @@ app.listen(process.env.PORT || 5000, async () => {
     //         "french": "Florizarre"
     //     },
     //     "type": [
-    //         "Grass",
+    //         "bad",
     //         "Poison"
     //     ],
     //     "base": {
@@ -107,7 +103,13 @@ app.listen(process.env.PORT || 5000, async () => {
 })
 
 // app.get('/api/v1/pokemons?count=2&after=10')     // - get all the pokemons after the 10th. List only Two.
-// app.post('/api/v1/pokemon')                      // - create a new pokemon
+app.post('/api/v1/pokemon', bodyParser.json(), (req, res) => { // - create a new pokemon
+    console.log(req.body);
+    pokemonModel.create(req.body, function (err) {
+        if (err) console.log(err);
+    })
+    res.json(req.body)
+})
 
 app.get('/api/v1/pokemon/:id', (req, res) => { // - get a pokemon
     console.log(req.params.id);
