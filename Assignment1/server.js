@@ -36,7 +36,10 @@ app.listen(process.env.PORT || 5000, async () => {
                     unique: true
                 },
                 "name": {
-                    "english": String,
+                    "english": {
+                        type: String,
+                        maxLength: 20
+                    },
                     "japanese": String,
                     "chinese": String,
                     "french": String
