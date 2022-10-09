@@ -123,7 +123,18 @@ app.listen(process.env.PORT || 5000, async () => {
     // });
 })
 
-// app.get('/api/v1/pokemons?count=2&after=10')     // - get all the pokemons after the 10th. List only Two.
+app.get('/api/v1/pokemons', (req, res) => { // - get all the pokemons after the 10th. List only Two.
+    let responseBody;
+    pokemonModel.find().skip(req.query.after).limit(req.query.count).exec((err, result) => {
+        if (err) {
+            responseBody = getMongooseErrorMessage(err, req);
+        } else {
+            responseBody = result;
+        }
+        res.json(responseBody);
+    })
+})
+
 app.post('/api/v1/pokemon', bodyParser.json(), (req, res) => { // - create a new pokemon
     console.log(req.body);
     let responseBody;
@@ -178,5 +189,10 @@ app.put('/api/v1/pokemon/:id', bodyParser.json(), (req, res) => { // - upsert a 
         }
     });
 })
+
 // app.patch('/api/v1/pokemon/:id')                 // - patch a pokemon document or a portion of the pokemon document
 // app.delete('/api/v1/pokemon/:id')                // - delete a  pokemon
+
+app.all('*', (req, res) => {
+    res.status(404).json({msg: "Request does not exist"});
+})
