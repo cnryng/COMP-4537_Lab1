@@ -97,33 +97,10 @@ app.listen(process.env.PORT || 5000, async () => {
         res.on("end", () => {
             let parsedJSON = JSON.parse(rawData);
             parsedJSON.forEach(obj => renameSpecialStats(obj));
+            pokemonModel.collection.drop();
             pokemonModel.insertMany(parsedJSON);
         })
     })
-
-    // await pokemonModel.create({
-    //     "id": 999,
-    //     "name": {
-    //         "english": "Venusaur",
-    //         "japanese": "フシギバナ",
-    //         "chinese": "妙蛙花",
-    //         "french": "Florizarre"
-    //     },
-    //     "type": [
-    //         "bad",
-    //         "Poison"
-    //     ],
-    //     "base": {
-    //         "HP": 45,
-    //         "Attack": 49,
-    //         "Defense": 49,
-    //         "Sp. Attack": 65,
-    //         "Sp. Defense": 65,
-    //         "Speed": 45
-    //     }
-    // }, err => {
-    //     if (err) console.log(err);
-    // });
 })
 
 app.get('/api/v1/pokemons', (req, res) => { // - get all the pokemons after the 10th. List only Two.
