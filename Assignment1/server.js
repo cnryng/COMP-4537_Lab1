@@ -56,7 +56,8 @@ app.listen(process.env.PORT || 5000, async () => {
                         "french": String
                     },
                     required: true,
-                    default: {}
+                    default: {},
+                    _id: false
                 },
                 "base": {
                     type: {
@@ -68,7 +69,8 @@ app.listen(process.env.PORT || 5000, async () => {
                         "Speed": {type: Number, required: true}
                     },
                     required: true,
-                    default: {}
+                    default: {},
+                    _id: false
                 },
                 "type":  {
                     type: [String],
