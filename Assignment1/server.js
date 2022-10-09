@@ -177,8 +177,15 @@ app.put('/api/v1/pokemon/:id', bodyParser.json(), (req, res) => { // - upsert a 
     });
 })
 
-app.patch('/api/v1/pokemon/:id', (req, res) => { // - patch a pokemon document or a portion of the pokemon document
-    pokemonModel.updateOne()
+app.patch('/api/v1/pokemon/:id', bodyParser.json(), (req, res) => { // - patch a pokemon document or a portion of the pokemon document
+    console.log(req.body);
+    pokemonModel.updateOne({ id: req.params.id }, req.body, { runValidators: true }, (err, opRes) => {
+        if (err) res.json(getMongooseErrorMessage(err, req));
+        else {
+            console.log(opRes);
+            res.json({msg: `Successfully patched pokemon with id ${req.params.id}`})
+        }
+    })
 })
 
 app.delete('/api/v1/pokemon/:id', (req, res) => { // - delete a  pokemon
