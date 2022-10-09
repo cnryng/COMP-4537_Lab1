@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 
 const app = express()
 const port = 5000
@@ -43,7 +44,7 @@ app.get('/api/v2/unicorns', (req, res) => {
 })
 
 app.use(express.json())
-app.post('/api/v2/unicorn', (req, res) => {
+app.post('/api/v2/unicorn', bodyParser.json(), (req, res) => {
     // - create a new unicorn
 
     unicornModel.create(req.body, function (err) {
