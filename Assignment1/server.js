@@ -140,11 +140,10 @@ app.post('/api/v1/pokemon', bodyParser.json(), (req, res) => { // - create a new
     let responseBody;
     pokemonModel.create(req.body, (err) => {
         if (err) {
-            responseBody = getMongooseErrorMessage(err, req);
+            res.json(getMongooseErrorMessage(err, req));
         } else {
-            responseBody = req.body;
+            res.json({msg: "Successfully inserted new pokemon"});
         }
-        res.json(responseBody);
     })
 })
 
@@ -183,9 +182,12 @@ app.get('/api/v1/pokemonImage/:id', async (req, res) => { // - get the url of a 
 app.put('/api/v1/pokemon/:id', bodyParser.json(), (req, res) => { // - upsert a whole pokemon document
     pokemonModel.updateOne({ id: req.params.id }, req.body, { upsert: true, runValidators: true, new: true }, (err, opRes) => {
         if (err) res.json(getMongooseErrorMessage(err, req));
+        else if (opRes.upsertedCount > 0) {
+            res.json({msg: `Couldn't find pokemon with id ${req.params.id}; inserted new pokemon instead`})
+        }
         else {
-            console.log();
-            res.json({msg: opRes})
+            console.log(opRes);
+            res.json({msg: `Successfully updated pokemon with id ${req.params.id}`})
         }
     });
 })
