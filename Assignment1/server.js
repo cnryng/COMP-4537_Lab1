@@ -194,5 +194,5 @@ app.put('/api/v1/pokemon/:id', bodyParser.json(), (req, res) => { // - upsert a 
 // app.delete('/api/v1/pokemon/:id')                // - delete a  pokemon
 
 app.all('*', (req, res) => {
-    res.status(404).json({msg: "Request does not exist"});
+    res.status(404).json({msg: "Improper request"});
 })
