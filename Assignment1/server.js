@@ -104,14 +104,19 @@ app.listen(process.env.PORT || 5000, async () => {
 })
 
 app.get('/api/v1/pokemons', (req, res) => { // - get all the pokemons after the 10th. List only Two.
-    let responseBody;
+    function isNumber(n) { return !isNaN(parseFloat(n)) && !isNaN(n - 0) }
+
+    if ((req.query.after && !isNumber(req.query.after)) || (req.query.count && !isNumber(req.query.count))) {
+        res.json({msg: `after = ${req.query.after}, count = ${req.query.count}; after and count query parameters must be numbers`});
+        return;
+    }
+
     pokemonModel.find().skip(req.query.after).limit(req.query.count).exec((err, result) => {
         if (err) {
-            responseBody = getMongooseErrorMessage(err, req);
+            res.json(getMongooseErrorMessage(err, req));
         } else {
-            responseBody = result;
+            res.json(result);
         }
-        res.json(responseBody);
     })
 })
 
