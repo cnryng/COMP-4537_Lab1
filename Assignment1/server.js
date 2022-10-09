@@ -43,7 +43,7 @@ app.listen(process.env.PORT || 5000, async () => {
                 "id": {
                     type: Number,
                     unique: true,
-                    required: true
+                    required: true,
                 },
                 "name": {
                     type: {
@@ -56,7 +56,8 @@ app.listen(process.env.PORT || 5000, async () => {
                         "chinese": String,
                         "french": String
                     },
-                    required: true
+                    required: true,
+                    default: {}
                 },
                 "base": {
                     type: {
@@ -67,12 +68,14 @@ app.listen(process.env.PORT || 5000, async () => {
                         "Sp Defense": {type: Number, required: true},
                         "Speed": {type: Number, required: true}
                     },
-                    required: true
+                    required: true,
+                    default: {}
                 },
                 "type":  {
                     type: [String],
                     enum: possibleTypes,
-                    required: true
+                    required: true,
+                    default: []
                 }
             });
             pokemonModel = mongoose.model('pokemon', pokemonSchema);
