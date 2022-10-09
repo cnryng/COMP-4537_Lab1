@@ -26,7 +26,7 @@ app.listen(process.env.PORT || 5000, async () => {
     } catch (error) {
         console.log('db error');
     }
-    console.log(`Example app listening on port ${port}`);
+    console.log(`App listening on port ${port}`);
 
     let possibleTypes = [];
 
@@ -38,7 +38,6 @@ app.listen(process.env.PORT || 5000, async () => {
         res.on("end", () => {
             let parsedData = JSON.parse(rawData);
             parsedData.map(element => possibleTypes.push(element.english));
-            console.log(possibleTypes)
             pokemonSchema = new Schema({
                 "id": {
                     type: Number,
@@ -99,6 +98,7 @@ app.listen(process.env.PORT || 5000, async () => {
             parsedJSON.forEach(obj => renameSpecialStats(obj));
             pokemonModel.collection.drop();
             pokemonModel.insertMany(parsedJSON);
+            console.log("Populated pokemons collection.")
         })
     })
 })
@@ -172,7 +172,9 @@ app.put('/api/v1/pokemon/:id', bodyParser.json(), (req, res) => { // - upsert a 
     });
 })
 
-// app.patch('/api/v1/pokemon/:id')                 // - patch a pokemon document or a portion of the pokemon document
+app.patch('/api/v1/pokemon/:id', (req, res) => { // - patch a pokemon document or a portion of the pokemon document
+    pokemonModel.updateOne()
+})
 
 app.delete('/api/v1/pokemon/:id', (req, res) => { // - delete a  pokemon
     pokemonModel.deleteOne({ id: req.params.id },  (err, opRes) => {
@@ -181,7 +183,7 @@ app.delete('/api/v1/pokemon/:id', (req, res) => { // - delete a  pokemon
             res.json(getMongooseErrorMessage(err, req));
         } else if (opRes.deletedCount === 0){
             console.log(opRes);
-            res.json({msg: `Pokemon with id ${req.params.id} does not exists`});
+            res.json({msg: `Failed to delete. Pokemon with id ${req.params.id} does not exists`});
         } else {
             console.log(opRes);
             res.json({msg: `Pokemon with id ${req.params.id} successfully deleted`});
