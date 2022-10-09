@@ -191,7 +191,21 @@ app.put('/api/v1/pokemon/:id', bodyParser.json(), (req, res) => { // - upsert a 
 })
 
 // app.patch('/api/v1/pokemon/:id')                 // - patch a pokemon document or a portion of the pokemon document
-// app.delete('/api/v1/pokemon/:id')                // - delete a  pokemon
+
+app.delete('/api/v1/pokemon/:id', (req, res) => { // - delete a  pokemon
+    pokemonModel.deleteOne({ id: req.params.id },  (err, opRes) => {
+        if (err) {
+            console.error(err);
+            res.json(getMongooseErrorMessage(err, req));
+        } else if (opRes.deletedCount === 0){
+            console.log(opRes);
+            res.json({msg: `Pokemon with id ${req.params.id} does not exists`});
+        } else {
+            console.log(opRes);
+            res.json({msg: `Pokemon with id ${req.params.id} successfully deleted`});
+        }
+    })
+})
 
 app.all('*', (req, res) => {
     res.status(404).json({msg: "Improper request"});
