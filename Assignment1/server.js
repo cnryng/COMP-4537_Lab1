@@ -10,6 +10,16 @@ const { Schema } = mongoose;
 let pokemonSchema;
 let pokemonModel;
 
+function getMongooseErrorMessage(err, req) {
+    if (err.code == 11000) {
+        console.log(err);
+        return {msg: `Pokemon with id ${req.body.id} already exists`};
+    } else {
+        console.log(err);
+        return {msg: err.message};
+    }
+}
+
 app.listen(process.env.PORT || 5000, async () => {
     try {
         await mongoose.connect("mongodb://localhost:27017/test");
@@ -26,35 +36,43 @@ app.listen(process.env.PORT || 5000, async () => {
             rawData += chunk;
         })
         res.on("end", () => {
-            //possibleTypes = JSON.parse(rawData);
             let parsedData = JSON.parse(rawData);
             parsedData.map(element => possibleTypes.push(element.english));
             console.log(possibleTypes)
             pokemonSchema = new Schema({
                 "id": {
                     type: Number,
-                    unique: true
+                    unique: true,
+                    required: true
                 },
                 "name": {
-                    "english": {
-                        type: String,
-                        maxLength: 20
+                    type: {
+                        "english": {
+                            type: String,
+                            maxLength: 20,
+                            required: true
+                        },
+                        "japanese": String,
+                        "chinese": String,
+                        "french": String
                     },
-                    "japanese": String,
-                    "chinese": String,
-                    "french": String
+                    required: true
                 },
                 "base": {
-                    "HP": Number,
-                    "Attack": Number,
-                    "Defense": Number,
-                    "Sp Attack": Number,
-                    "Sp Defense": Number,
-                    "Speed": Number
+                    type: {
+                        "HP": {type: Number, required: true},
+                        "Attack": {type: Number, required: true},
+                        "Defense": {type: Number, required: true},
+                        "Sp Attack": {type: Number, required: true},
+                        "Sp Defense": {type: Number, required: true},
+                        "Speed": {type: Number, required: true}
+                    },
+                    required: true
                 },
                 "type":  {
                     type: [String],
-                    enum: possibleTypes
+                    enum: possibleTypes,
+                    required: true
                 }
             });
             pokemonModel = mongoose.model('pokemon', pokemonSchema);
@@ -108,27 +126,34 @@ app.listen(process.env.PORT || 5000, async () => {
 // app.get('/api/v1/pokemons?count=2&after=10')     // - get all the pokemons after the 10th. List only Two.
 app.post('/api/v1/pokemon', bodyParser.json(), (req, res) => { // - create a new pokemon
     console.log(req.body);
-    pokemonModel.create(req.body, function (err) {
-        if (err) console.log(err);
+    let responseBody;
+    pokemonModel.create(req.body, (err) => {
+        if (err) {
+            responseBody = getMongooseErrorMessage(err, req);
+        } else {
+            responseBody = req.body;
+        }
+        res.json(responseBody);
     })
-    res.json(req.body)
 })
 
 app.get('/api/v1/pokemon/:id', (req, res) => { // - get a pokemon
     console.log(req.params.id);
-    pokemonModel.find({ id: `${req.params.id}` })
-        .then(doc => {
-            console.log(doc);
-            res.json(doc);
-        })
-        .catch(err => {
+    pokemonModel.find({ id: `${req.params.id}` }, (err, doc) => {
+        if (err) {
             console.error(err)
             res.json({msg: "db reading .. err.  Check with server devs"})
-        })
+        } else if (doc.length === 0){
+            console.log(doc);
+            res.json({msg: `Pokemon with id ${req.params.id} does not exists`});
+        } else {
+            console.log(doc);
+            res.json(doc);
+        }
+    })
 })
 
-app.get('/api/v1/pokemonImage/:id', async (req, res) => {
-
+app.get('/api/v1/pokemonImage/:id', async (req, res) => { // - get the url of a pokemon
     function idToThreeDigitString(id) {
         if (Math.floor(id / 10) > 10) {
             return id.toString();
@@ -138,13 +163,20 @@ app.get('/api/v1/pokemonImage/:id', async (req, res) => {
             return "00" + id.toString();
         }
     }
-
     res.json({
         url: "https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/"
             + idToThreeDigitString(req.params.id) + ".png"
     })
 })
-// app.put('/api/v1/pokemon/:id')                   // - upsert a whole pokemon document
-// app.patch('/api/v1/pokemon/:id')                 // - patch a pokemon document or a
-//   portion of the pokemon document
+
+app.put('/api/v1/pokemon/:id', bodyParser.json(), (req, res) => { // - upsert a whole pokemon document
+    pokemonModel.updateOne({ id: req.params.id }, req.body, { upsert: true, runValidators: true, new: true }, (err, opRes) => {
+        if (err) res.json(getMongooseErrorMessage(err, req));
+        else {
+            console.log();
+            res.json({msg: opRes})
+        }
+    });
+})
+// app.patch('/api/v1/pokemon/:id')                 // - patch a pokemon document or a portion of the pokemon document
 // app.delete('/api/v1/pokemon/:id')                // - delete a  pokemon
