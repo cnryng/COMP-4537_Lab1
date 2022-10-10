@@ -186,9 +186,11 @@ app.patch('/api/v1/pokemon/:id', bodyParser.json(), (req, res) => { // - patch a
     console.log(req.body);
     pokemonModel.updateOne({ id: req.params.id }, req.body, { runValidators: true }, (err, opRes) => {
         if (err) res.json(getMongooseErrorMessage(err, req));
-        else {
-            console.log(opRes);
+        else if (opRes.modifiedCount > 0) {
             res.json({msg: `Successfully patched pokemon with id ${req.params.id}`})
+        }
+        else {
+            res.json({msg: `Patch failed. Pokemon with id ${req.params.id} does not exist`})
         }
     })
 })
