@@ -1,0 +1,613 @@
+{
+	"info": {
+		"_postman_id": "edda83ed-c925-4df3-a3d2-9b817eef0d16",
+		"name": "COMP4537 Assignment 1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Pokemon",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/pokemon/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemon",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pokemon Bad ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/pokemon/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemon",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "999"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Image Urls",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/pokemonImage/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemonImage",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pokemon",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 10034,\r\n        \"name\": {\r\n            \"english\": \"1234567890\",\r\n            \"japanese\": \"\",\r\n            \"chinese\": \"\",\r\n            \"french\": \"\"\r\n        },\r\n        \"type\": [\r\n            \"Dragon\",\r\n            \"Poison\"\r\n        ],\r\n        \"base\": {\r\n            \"HP\": 45,\r\n            \"Attack\": 49,\r\n            \"Defense\": 49,\r\n            \"Sp Attack\": 65,\r\n            \"Sp Defense\": 65,\r\n            \"Speed\": 45\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/pokemon",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemon"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pokemon Bad Name",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 1001,\r\n        \"name\": {\r\n            \"english\": \"ThisNameHasMoreThanTwentyCharacters\",\r\n            \"japanese\": \"\",\r\n            \"chinese\": \"\",\r\n            \"french\": \"\"\r\n        },\r\n        \"type\": [\r\n            \"Poison\"\r\n        ],\r\n        \"base\": {\r\n            \"HP\": 45,\r\n            \"Attack\": 49,\r\n            \"Defense\": 49,\r\n            \"Sp Attack\": 65,\r\n            \"Sp Defense\": 65,\r\n            \"Speed\": 45\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/pokemon",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemon"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pokemon Bad Type",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 1001,\r\n        \"name\": {\r\n            \"english\": \"Test\",\r\n            \"japanese\": \"\",\r\n            \"chinese\": \"\",\r\n            \"french\": \"\"\r\n        },\r\n        \"type\": [\r\n            \"NotRealType\"\r\n        ],\r\n        \"base\": {\r\n            \"HP\": 45,\r\n            \"Attack\": 49,\r\n            \"Defense\": 49,\r\n            \"Sp Attack\": 65,\r\n            \"Sp Defense\": 65,\r\n            \"Speed\": 45\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/pokemon",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemon"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pokemon Existing ID",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 1,\r\n        \"name\": {\r\n            \"english\": \"Test\",\r\n            \"japanese\": \"\",\r\n            \"chinese\": \"\",\r\n            \"french\": \"\"\r\n        },\r\n        \"type\": [\r\n            \"Poison\"\r\n        ],\r\n        \"base\": {\r\n            \"HP\": 45,\r\n            \"Attack\": 49,\r\n            \"Defense\": 49,\r\n            \"Sp Attack\": 65,\r\n            \"Sp Defense\": 65,\r\n            \"Speed\": 45\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/pokemon",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemon"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upsert Pokemon Existing ID",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 1,\r\n        \"name\": {\r\n            \"english\": \"1234567890\",\r\n            \"japanese\": \"\",\r\n            \"chinese\": \"\",\r\n            \"french\": \"\"\r\n        },\r\n        \"type\": [\r\n            \"Dragon\",\r\n            \"Poison\"\r\n        ],\r\n        \"base\": {\r\n            \"HP\": 45,\r\n            \"Attack\": 49,\r\n            \"Defense\": 49,\r\n            \"Sp Attack\": 65,\r\n            \"Sp Defense\": 65,\r\n            \"Speed\": 45\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/pokemon/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemon",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upsert Pokemon New ID",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 12345,\r\n        \"name\": {\r\n            \"english\": \"1234567890\",\r\n            \"japanese\": \"\",\r\n            \"chinese\": \"\",\r\n            \"french\": \"\"\r\n        },\r\n        \"type\": [\r\n            \"Dragon\",\r\n            \"Poison\"\r\n        ],\r\n        \"base\": {\r\n            \"HP\": 45,\r\n            \"Attack\": 49,\r\n            \"Defense\": 49,\r\n            \"Sp Attack\": 65,\r\n            \"Sp Defense\": 65,\r\n            \"Speed\": 45\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/pokemon/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemon",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "12345"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upsert Pokemon Existing ID Invalid Doc",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 1,\r\n        \"name\": {\r\n            \"english\": \"1234567890\",\r\n            \"japanese\": \"\",\r\n            \"chinese\": \"\",\r\n            \"french\": \"\"\r\n        },\r\n        \"type\": [\r\n            \"BadType\"\r\n        ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/pokemon/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemon",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upsert Pokemon New ID Invalid Doc Copy",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/pokemon/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemon",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "54321"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pokemon by Count and Limit",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/pokemons?count=2&after=10",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemons"
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": "2"
+						},
+						{
+							"key": "after",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pokemon All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/pokemons?count=&after=",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemons"
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": ""
+						},
+						{
+							"key": "after",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pokemon Count Only",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/pokemons?count=2&after=",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemons"
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": "2"
+						},
+						{
+							"key": "after",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pokemon After Only",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/pokemons?count=&after=10",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemons"
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": ""
+						},
+						{
+							"key": "after",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pokemon Bad Count/After",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/pokemons?count=bad count&after=bad after",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemons"
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": "bad count"
+						},
+						{
+							"key": "after",
+							"value": "bad after"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Pokemon",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/pokemon/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemon",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "10034"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Pokemon ID Not Found",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/pokemon/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemon",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "99999"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Pokemon Existing ID",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": {\r\n        \"english\": \"Some name\"\r\n    },\r\n    \"base\": {\r\n        \"HP\": 0,\r\n        \"Attack\": 0,\r\n        \"Defense\": 0,\r\n        \"Sp Attack\": 0,\r\n        \"Sp Defense\": 0,\r\n        \"Speed\": 0\r\n    },\r\n    \"type\": [\"Dragon\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/pokemon/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemon",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Pokemon Non-Existing ID",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": {\r\n        \"english\": \"Some name\"\r\n    },\r\n    \"base\": {\r\n        \"HP\": 0,\r\n        \"Attack\": 0,\r\n        \"Defense\": 0,\r\n        \"Sp Attack\": 0,\r\n        \"Sp Defense\": 0,\r\n        \"Speed\": 0\r\n    },\r\n    \"type\": [\"Dragon\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/pokemon/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pokemon",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "123123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bad Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/notValid",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"notValid"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "localhost:5000/api/v1"
+		},
+		{
+			"key": "heroku_url",
+			"value": "https://arcane-crag-55421.herokuapp.com/api/v1"
+		}
+	]
+}
