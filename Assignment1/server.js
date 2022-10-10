@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 const bodyParser = require('body-parser');
 const https = require('https');
 
@@ -139,7 +140,7 @@ app.post('/api/v1/pokemon', bodyParser.json(), (req, res) => { // - create a new
 
 app.get('/api/v1/pokemon/:id', (req, res) => { // - get a pokemon
     console.log(req.params.id);
-    pokemonModel.find({ id: `${req.params.id}` }, (err, doc) => {
+    pokemonModel.find({ id: req.params.id }, (err, doc) => {
         if (err) {
             console.error(err)
             res.json({msg: "db reading .. err.  Check with server devs"})
@@ -208,6 +209,10 @@ app.delete('/api/v1/pokemon/:id', (req, res) => { // - delete a  pokemon
             res.json({msg: `Pokemon with id ${req.params.id} successfully deleted`});
         }
     })
+})
+
+app.get('/api/doc', (req, res) => {
+    res.sendFile(path.join(__dirname, '/docs.html'))
 })
 
 app.all('*', (req, res) => {
