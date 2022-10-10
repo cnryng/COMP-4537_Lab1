@@ -5,6 +5,7 @@ const https = require('https');
 
 const app = express();
 const port = 5000;
+const dbURL = "mongodb+srv://test-user:9pmeJjRNqtysbXZF@testcluster.lcqmg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const { Schema } = mongoose;
 
 let pokemonSchema;
@@ -22,7 +23,7 @@ function getMongooseErrorMessage(err, req) {
 
 app.listen(process.env.PORT || 5000, async () => {
     try {
-        await mongoose.connect("mongodb://localhost:27017/test");
+        await mongoose.connect(dbURL);
     } catch (error) {
         console.log('db error');
     }
@@ -32,10 +33,10 @@ app.listen(process.env.PORT || 5000, async () => {
 
     await https.get("https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/types.json", async (res) => {
         let rawData = "";
-        res.on("data", (chunk) => {
+        await res.on("data", (chunk) => {
             rawData += chunk;
         })
-        res.on("end", () => {
+        await res.on("end", () => {
             let parsedData = JSON.parse(rawData);
             parsedData.map(element => possibleTypes.push(element.english));
             pokemonSchema = new Schema({
@@ -95,11 +96,12 @@ app.listen(process.env.PORT || 5000, async () => {
         res.on("data", (chunk) => {
             rawData += chunk;
         })
-        res.on("end", () => {
+        res.on("end", async () => {
             let parsedJSON = JSON.parse(rawData);
             parsedJSON.forEach(obj => renameSpecialStats(obj));
-            pokemonModel.collection.drop();
-            pokemonModel.insertMany(parsedJSON);
+            await pokemonModel.collection.drop();
+            await pokemonModel.collection.createIndex({id: 1}, {unique: true});
+            await pokemonModel.insertMany(parsedJSON);
             console.log("Populated pokemons collection.")
         })
     })
@@ -125,10 +127,11 @@ app.get('/api/v1/pokemons', (req, res) => { // - get all the pokemons after the 
 app.post('/api/v1/pokemon', bodyParser.json(), (req, res) => { // - create a new pokemon
     console.log(req.body);
     let responseBody;
-    pokemonModel.create(req.body, (err) => {
+    pokemonModel.create(req.body, (err, opRes) => {
         if (err) {
             res.json(getMongooseErrorMessage(err, req));
         } else {
+            console.log(opRes);
             res.json({msg: "Successfully inserted new pokemon"});
         }
     })
