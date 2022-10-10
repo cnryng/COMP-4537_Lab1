@@ -152,7 +152,7 @@ app.get('/api/v1/pokemon/:id', (req, res) => { // - get a pokemon
 
 app.get('/api/v1/pokemonImage/:id', async (req, res) => { // - get the url of a pokemon
     function idToThreeDigitString(id) {
-        if (Math.floor(id / 10) > 10) {
+        if (Math.floor(id / 10) >= 10) {
             return id.toString();
         } else if (Math.floor(id / 10) > 1) {
             return "0" + id.toString();
