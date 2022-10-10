@@ -1,0 +1,231 @@
+<h2 id="-get-pokemons-"><strong>Get Pokemons</strong></h2>
+<p>  Returns json data about multiple pokemon</p>
+<ul>
+    <li><p><strong>URL</strong></p>
+        <p>/api/v1/pokemons?count=after=</p>
+    </li>
+    <li><p><strong>Method:</strong></p>
+        <p><code>GET</code></p>
+    </li>
+    <li><p><strong>URL Params</strong></p>
+        <p><strong>Optional:</strong></p>
+        <ul>
+            <li>count=[integer]</li>
+            <li>after=[integer]</li>
+        </ul>
+    </li>
+</ul>
+<ul>
+    <li><p><strong>Data Params</strong></p>
+        <p>None</p>
+    </li>
+    <li><p><strong>Success Response:</strong></p>
+        <p>  <strong>Content:</strong> <code>One or more pokemon documents</code></p>
+    </li>
+    <li><p><strong>Error Response:</strong></p>
+        <p>  <strong>Content:</strong> <code>{ msg : &quot;after and count query parameters must be numbers&quot; }</code></p>
+        <p>OR</p>
+        <p>  <strong>Content:</strong> <code>{ msg: &lt;mongoDB query error&gt; }</code></p>
+    </li>
+</ul>
+<h2 id="-get-a-pokemon-"><strong>Get a Pokemon</strong></h2>
+<p>  Returns json data about a single pokemon by id</p>
+<ul>
+    <li><p><strong>URL</strong></p>
+        <p>/api/v1/pokemons/:id</p>
+    </li>
+    <li><p><strong>Method:</strong></p>
+        <p><code>GET</code></p>
+    </li>
+    <li><p><strong>URL Params</strong></p>
+        <p><strong>Required:</strong></p>
+        <ul>
+            <li>id=[integer]</li>
+        </ul>
+    </li>
+    <li><p><strong>Data Params</strong></p>
+        <p>None</p>
+    </li>
+    <li><p><strong>Success Response:</strong></p>
+        <p>  <strong>Content:</strong> <code>One pokemon document</code></p>
+    </li>
+    <li><p><strong>Error Response:</strong></p>
+        <p>  <strong>Content:</strong> <code>{msg:</code>Pokemon with id ${req.params.id} does not exists<code>}</code></p>
+    </li>
+</ul>
+<h2 id="-create-a-pokemon-"><strong>Create a Pokemon</strong></h2>
+<p>  Inserts a pokemon document</p>
+<ul>
+    <li><p><strong>URL</strong></p>
+        <p>/api/v1/pokemon/</p>
+    </li>
+    <li><p><strong>Method:</strong></p>
+        <p><code>POST</code></p>
+    </li>
+    <li><p><strong>URL Params</strong></p>
+        <p>None</p>
+    </li>
+    <li><p><strong>Data Params</strong></p>
+        <p>{</p>
+        <pre><code>  <span class="hljs-string">"id"</span>: [<span class="hljs-built_in">integer</span>],
+  <span class="hljs-string">"name"</span>: {
+      <span class="hljs-string">"english"</span>: [<span class="hljs-built_in">string</span>],
+      <span class="hljs-string">"japanese"</span>: [<span class="hljs-built_in">string</span>],
+      <span class="hljs-string">"chinese"</span>: [<span class="hljs-built_in">string</span>],
+      <span class="hljs-string">"french"</span>: [<span class="hljs-built_in">string</span>]
+  },
+  <span class="hljs-string">"type"</span>: [<span class="hljs-built_in">string</span> <span class="hljs-built_in">array</span>],
+  <span class="hljs-string">"base"</span>: {
+      <span class="hljs-string">"HP"</span>: [<span class="hljs-built_in">integer</span>],
+      <span class="hljs-string">"Attack"</span>: [<span class="hljs-built_in">integer</span>],
+      <span class="hljs-string">"Defense"</span>: [<span class="hljs-built_in">integer</span>],
+      <span class="hljs-string">"Sp Attack"</span>: [<span class="hljs-built_in">integer</span>],
+      <span class="hljs-string">"Sp Defense"</span>: [<span class="hljs-built_in">integer</span>],
+      <span class="hljs-string">"Speed"</span>: [<span class="hljs-built_in">integer</span>]
+  }
+</code></pre><p>}</p>
+    </li>
+    <li><p><strong>Success Response:</strong></p>
+        <p>  <strong>Content:</strong> {msg: &quot;Successfully inserted new pokemon&quot;}</p>
+    </li>
+    <li><p><strong>Error Response:</strong></p>
+        <p>  <strong>Content:</strong> <code>{msg: &lt;mongoDB insertion error&gt;}</code></p>
+    </li>
+</ul>
+<h2 id="-get-pokemon-image-url-"><strong>Get Pokemon Image URL</strong></h2>
+<p>  Get a pokemon&#39;s image URL.</p>
+<ul>
+    <li><p><strong>URL</strong></p>
+        <p>/api/v1/pokemonImage/:id</p>
+    </li>
+    <li><p><strong>Method:</strong></p>
+        <p><code>GET</code></p>
+    </li>
+    <li><p><strong>URL Params</strong></p>
+        <p><strong>Required:</strong></p>
+        <ul>
+            <li>id=[integer]</li>
+        </ul>
+    </li>
+    <li><p><strong>Data Params</strong></p>
+        <ul>
+            <li>None</li>
+        </ul>
+    </li>
+    <li><p><strong>Success Response:</strong></p>
+        <p>  <strong>Content:</strong> {msg: <image url>}</p>
+    </li>
+</ul>
+<h2 id="-upsert-a-pokemon-"><strong>Upsert a Pokemon</strong></h2>
+<p>  Updates a pokemon given an id; inserts new Pokemon if id does not exist</p>
+<ul>
+    <li><p><strong>URL</strong></p>
+        <p>/api/v1/pokemon/:id</p>
+    </li>
+    <li><p><strong>Method:</strong></p>
+        <p><code>PUT</code></p>
+    </li>
+    <li><p><strong>URL Params</strong></p>
+        <p><strong>Required:</strong></p>
+        <ul>
+            <li>id=[integer]</li>
+        </ul>
+    </li>
+    <li><p><strong>Data Params</strong></p>
+        <p>{</p>
+        <pre><code>  <span class="hljs-string">"id"</span>: [<span class="hljs-built_in">integer</span>],
+  <span class="hljs-string">"name"</span>: {
+      <span class="hljs-string">"english"</span>: [<span class="hljs-built_in">string</span>],
+      <span class="hljs-string">"japanese"</span>: [<span class="hljs-built_in">string</span>],
+      <span class="hljs-string">"chinese"</span>: [<span class="hljs-built_in">string</span>],
+      <span class="hljs-string">"french"</span>: [<span class="hljs-built_in">string</span>]
+  },
+  <span class="hljs-string">"type"</span>: [<span class="hljs-built_in">string</span> <span class="hljs-built_in">array</span>],
+  <span class="hljs-string">"base"</span>: {
+      <span class="hljs-string">"HP"</span>: [<span class="hljs-built_in">integer</span>],
+      <span class="hljs-string">"Attack"</span>: [<span class="hljs-built_in">integer</span>],
+      <span class="hljs-string">"Defense"</span>: [<span class="hljs-built_in">integer</span>],
+      <span class="hljs-string">"Sp Attack"</span>: [<span class="hljs-built_in">integer</span>],
+      <span class="hljs-string">"Sp Defense"</span>: [<span class="hljs-built_in">integer</span>],
+      <span class="hljs-string">"Speed"</span>: [<span class="hljs-built_in">integer</span>]
+  }
+</code></pre><p>}</p>
+    </li>
+    <li><p><strong>Success Response:</strong></p>
+        <p>  <strong>Content:</strong> <code>{ msg : &quot;Couldn&#39;t find pokemon with id ${req.params.id}; inserted new pokemon instead&quot; }</code></p>
+        <p>OR</p>
+        <p>  <strong>Content:</strong> <code>{ msg: &quot;Successfully updated pokemon with id ${req.params.id}&quot; }</code></p>
+    </li>
+    <li><p><strong>Error Response:</strong></p>
+        <p>  <strong>Content:</strong> <code>{msg: &lt;mongoDB insertion or insertion error&gt;}</code></p>
+    </li>
+</ul>
+<h2 id="-patch-a-pokemon-"><strong>Patch a Pokemon</strong></h2>
+<p>  Updates a pokemon given an id; data in body can be an incomplete document.</p>
+<ul>
+    <li><p><strong>URL</strong></p>
+        <p>/api/v1/pokemon/:id</p>
+    </li>
+    <li><p><strong>Method:</strong></p>
+        <p><code>PATCH</code></p>
+    </li>
+    <li><p><strong>URL Params</strong></p>
+        <p><strong>Required:</strong></p>
+        <ul>
+            <li>id=[integer]</li>
+        </ul>
+    </li>
+    <li><p><strong>Data Params</strong></p>
+        <p>{</p>
+        <pre><code>  <span class="hljs-string">"id"</span>: [<span class="hljs-built_in">integer</span>],
+  <span class="hljs-string">"name"</span>: {
+      <span class="hljs-string">"english"</span>: [<span class="hljs-built_in">string</span>],
+      <span class="hljs-string">"japanese"</span>: [<span class="hljs-built_in">string</span>],
+      <span class="hljs-string">"chinese"</span>: [<span class="hljs-built_in">string</span>],
+      <span class="hljs-string">"french"</span>: [<span class="hljs-built_in">string</span>]
+  },
+  <span class="hljs-string">"type"</span>: [<span class="hljs-built_in">string</span> <span class="hljs-built_in">array</span>],
+  <span class="hljs-string">"base"</span>: {
+      <span class="hljs-string">"HP"</span>: [<span class="hljs-built_in">integer</span>],
+      <span class="hljs-string">"Attack"</span>: [<span class="hljs-built_in">integer</span>],
+      <span class="hljs-string">"Defense"</span>: [<span class="hljs-built_in">integer</span>],
+      <span class="hljs-string">"Sp Attack"</span>: [<span class="hljs-built_in">integer</span>],
+      <span class="hljs-string">"Sp Defense"</span>: [<span class="hljs-built_in">integer</span>],
+      <span class="hljs-string">"Speed"</span>: [<span class="hljs-built_in">integer</span>]
+  }
+</code></pre><p>}</p>
+    </li>
+    <li><p><strong>Success Response:</strong></p>
+        <p>  <strong>Content:</strong> <code>{msg:</code>Successfully patched pokemon with id ${req.params.id}<code>}</code></p>
+    </li>
+    <li><p><strong>Error Response:</strong></p>
+        <p>  <strong>Content:</strong> <code>{msg:</code>Patch failed. Pokemon with id ${req.params.id} does not exist<code>}</code></p>
+    </li>
+</ul>
+<h2 id="-delete-a-pokemon-"><strong>Delete a Pokemon</strong></h2>
+<p>  Updates a pokemon given an id; data in body can be an incomplete document.</p>
+<ul>
+    <li><p><strong>URL</strong></p>
+        <p>/api/v1/pokemon/:id</p>
+    </li>
+    <li><p><strong>Method:</strong></p>
+        <p><code>DELETE</code></p>
+    </li>
+    <li><p><strong>URL Params</strong></p>
+        <p><strong>Required:</strong></p>
+        <ul>
+            <li>id=[integer]</li>
+        </ul>
+    </li>
+    <li><p><strong>Data Params</strong></p>
+        <ul>
+            <li>None</li>
+        </ul>
+    </li>
+    <li><p><strong>Success Response:</strong></p>
+        <p>  <strong>Content:</strong> <code>{msg:</code>Pokemon with id ${req.params.id} successfully deleted<code>}</code></p>
+    </li>
+    <li><p><strong>Error Response:</strong></p>
+        <p>  <strong>Content:</strong> <code>{msg:</code>Failed to delete. Pokemon with id ${req.params.id} does not exists<code>}</code></p>
+    </li>
+</ul>
