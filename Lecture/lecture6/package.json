@@ -1,0 +1,11 @@
+{
+  "name": "Assignment1",
+  "version": "1.0.0",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "markdown-serve": "^0.8.0",
+    "mongoose": "^6.6.4",
+    "path": "^0.12.7"
+  }
+}

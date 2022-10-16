@@ -1,0 +1,14 @@
+{
+  "name": "lecture5",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "main": "server.js",
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
