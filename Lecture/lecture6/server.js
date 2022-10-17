@@ -127,8 +127,6 @@ app.get('/api/v1/pokemonsAdvancedFiltering/', (req, res) => {
         "base.Speed": req.query["base.Speed"]
     }
 
-    console.log(Object.keys(parsedQueryParams));
-
     if (req.query.type) {
         const typeArray = req.query.type.replace(/\s/g,'').split(",")
         parsedQueryParams["type"] = {
@@ -185,17 +183,21 @@ app.get('/api/v1/pokemonsAdvancedFiltering/', (req, res) => {
     const hitsPerPage = req.query.hitsPerPage ? req.query.hitsPerPage : "5";
     const itemsAfterPage = (parseInt(page) - 1) * parseInt(hitsPerPage)
 
-    pokemonModel.find(parsedQueryParams).select(filteredPropertySelect).sort(sortSelect).limit(hitsPerPage)
-        .skip(itemsAfterPage).exec((err, doc) => {
+    pokemonModel.find(parsedQueryParams).select(filteredPropertySelect).sort(sortSelect).exec((err, doc) => {
         if (err) {
             res.json(getMongooseErrorMessage(err, doc));
         } else {
-            responseObject["hits"] = doc;
+            responseObject["hits"] = doc.slice(itemsAfterPage, itemsAfterPage + hitsPerPage);
             responseObject["page"] = page;
             responseObject["nbHits"] = doc.length;
+            responseObject["nbPages"] = Math.ceil(doc.length / hitsPerPage);
             responseObject["hitsPerPage"] = hitsPerPage;
             responseObject["query"] = parsedQueryParams;
-            responseObject["params"] = url.parse(req.url).search.substring(1);
+            if (url.parse(req.url).search) {
+                responseObject["params"] = url.parse(req.url).search.substring(1);
+            } else {
+                responseObject["params"] = ""
+            }
             res.json(responseObject);
         }
     });
