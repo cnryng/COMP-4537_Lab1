@@ -76,3 +76,12 @@ app.get('/users', (req, res, next) => {
     res.send(arr); //notice how arr is [1,2,3,4] instead of [1,2,3,4,5].
     // This is b/c this line is executed before going back to execute the remaining code in the first middleware
 })
+
+app.get('/returnNext', (req, res, next) => {
+    console.log("1");
+    return next();
+    console.log("3"); //doesn't get executed b/c return next() will not return control to this function after succeeding middleware terminates
+})
+app.get('/returnNext', (req, res, next) => {
+    console.log("2");
+})
