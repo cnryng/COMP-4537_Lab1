@@ -37,7 +37,7 @@ db.unicorns.find({
         {$or : [
                 {loves : {$in : ["apple"]}},
                 {weight : {$lt : 500}}
-                ]
+            ]
         }
     ]
 })
@@ -96,3 +96,6 @@ db.unicorns.find().sort({weight : 1}).skip(1).limit(2)
 
 //returns same rows as above statement
 db.unicorns.find().sort({weight : 1}).limit(2).skip(1)
+
+//returns same rows as above statement
+db.unicorns.find().limit(2).skip(1).sort({weight : 1})
