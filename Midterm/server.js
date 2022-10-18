@@ -124,7 +124,7 @@ app.get('/pokemonsAdvancedFiltering', (req, res) => {
             element = element.replace("<", "$lt");
             element = element.replace("==", "$eq");
             element = element.replace("!=", "$ne");
-            const regex = /([A-Za-z]*)(\$[a-z]*)([0-9]*)/
+            const regex = /([A-Za-z\s]*)(\$[a-z]*)([0-9]*)/
             const matches = element.match(regex);
             console.log(matches[1] + " " + matches[2] + " " + matches[3]);
             const comparisonElement = {
@@ -135,7 +135,6 @@ app.get('/pokemonsAdvancedFiltering', (req, res) => {
             filterArray.push(comparisonElement);
         })
     }
-
 
     pokemonModel.find({
        $and: filterArray
