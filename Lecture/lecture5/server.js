@@ -5,11 +5,13 @@ const app = express();
 app.listen(5000);
 
 const logger = (req, res, next) => {
+    console.log("First middleware");
     console.log("Time:", Date.now());
     next(); //with no params, will move control to next function in the route
 }
 
 const urlReqLogger = (req, res, next) => {
+    console.log("Second middleware");
     console.log(req.originalUrl);
     next();
 }
@@ -27,3 +29,11 @@ app.get('/', (req, res) => {
 app.get('/other', (req, res) => {
     res.send("other");
 });
+
+app.get('/callbacks', (req, res, next) => {
+    console.log("first callback");
+    next();
+}, (req, res) => {
+    console.log("second callback");
+    res.send("finished");
+})
