@@ -1,1 +1,6 @@
-DBECFA
+DBECFC
+
+Last regex question doesn't seem to have a correct answer:
+- ^ cannot be used outside of []
+- & is not a logical operator in regex
+- .*$ will match any endings (last 2 choices)
