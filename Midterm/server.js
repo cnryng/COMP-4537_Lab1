@@ -135,12 +135,12 @@ app.get('/pokemonsAdvancedFiltering', (req, res) => {
             filterArray.push(comparisonElement);
         })
     }
-
+    let responseObject = {};
     pokemonModel.find({
        $and: filterArray
     }).exec((err, docs) => {
-        console.log(filterArray);
-        res.json(docs);
+        responseObject["hits"] = docs;
+        res.json(responseObject);
     })
 
 })
