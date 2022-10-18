@@ -160,7 +160,6 @@ app.get('/api/v1/pokemonsAdvancedFiltering/', (req, res) => {
             element = element.trim();
             filteredPropertySelect[element] = 1;
         })
-
     }
     console.log(filteredPropertySelect);
 

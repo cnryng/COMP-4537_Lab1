@@ -7,7 +7,7 @@ db.unicorns.find()
 db.unicorns.find({ //selection
     gender: "f",
     weight: {$gt : 500} //using selector for greater than
-}, { //projection --> fields returned after query; default is all fields
+}, {    //projection --> fields returned after query; default is all fields
     name : true, //takes a boolean as a value (can be 0 or 1)
     _id : false //special case for _id, which is on by default and manually needs to be set to false
 })
