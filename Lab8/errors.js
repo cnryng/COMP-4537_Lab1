@@ -1,4 +1,11 @@
-export class PokemonNotFoundError extends Error {
+class PokemonBadRequest extends Error {
+    constructor(message) {
+        super(message);
+        this.name = "PokemonBadRequest"
+    }
+}
+
+class PokemonNotFoundError extends Error {
     constructor(message) {
         super(message);
         this.name = "PokemonNotFoundError"
@@ -6,3 +13,4 @@ export class PokemonNotFoundError extends Error {
 }
 
 
+module.exports = { PokemonBadRequest, PokemonNotFoundError }
