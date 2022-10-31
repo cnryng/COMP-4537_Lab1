@@ -212,7 +212,10 @@ app.patch('/api/v1/pokemon/:id', bodyParser.json(), asyncWrapper(async (req, res
 }))
 
 app.delete('/api/v1/pokemon/:id', asyncWrapper(async (req, res) => { // - delete a  pokemon
-    await pokemonModel.deleteOne({ id: req.params.id });
+    const deleteResponse = await pokemonModel.deleteOne({ id: req.params.id });
+    if (deleteResponse.deletedCount === 0) {
+        throw new PokemonNotFoundError(`Delete failed on pokemon with id ${req.params.id}`)
+    }
     res.json({msg: `Pokemon with id ${req.params.id} successfully deleted`});
     // pokemonModel.deleteOne({ id: req.params.id },  (err, opRes) => {
     //     if (err) {
