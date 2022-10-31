@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="myFirstDatabase@testcluster.lcqmg.mongodb.net">
+  <database-model serializer="dbm" dbms="MONGO" family-id="MONGO" format-version="4.20">
+    <root id="1">
+      <ServerVersion>5.0.13</ServerVersion>
+    </root>
+    <schema id="2" parent="1">
+      <Current>1</Current>
+    </schema>
+  </database-model>
+</dataSource>
