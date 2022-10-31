@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7b8afa39-e018-4c74-b2c2-dae86a879bfd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/errors.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/errors.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab8/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab8/.idea/vcs.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +47,7 @@
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="HTML" />
     <property name="javascript.nodejs.core.library.configured.version" value="14.15.1" />
     <property name="javascript.nodejs.core.library.typings.version" value="14.18.31" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../COMP4800-Projects/my-living-city" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Lab8" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -82,7 +84,7 @@
       <workItem from="1665509973521" duration="757000" />
       <workItem from="1666060088130" duration="94000" />
       <workItem from="1667071309840" duration="603000" />
-      <workItem from="1667229943889" duration="1004000" />
+      <workItem from="1667229943889" duration="1357000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1665049561983</created>

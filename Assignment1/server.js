@@ -12,16 +12,6 @@ const { Schema } = mongoose;
 let pokemonSchema;
 let pokemonModel;
 
-const asyncWrapper = (fn) => {
-    return async (req, res, next) => {
-        try {
-            await fn(req, res, next)
-        } catch (error) {
-            next(error)
-        }
-    }
-}
-
 function getMongooseErrorMessage(err, req) {
     if (err.code == 11000) {
         console.log(err);
