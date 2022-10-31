@@ -182,45 +182,50 @@ app.get('/api/v1/pokemonImage/:id', asyncWrapper(async (req, res) => { // - get 
     })
 }))
 
-app.put('/api/v1/pokemon/:id', bodyParser.json(), asyncWrapper((req, res) => { // - upsert a whole pokemon document
-    pokemonModel.updateOne({ id: req.params.id }, req.body, { upsert: true, runValidators: true, new: true }, (err, opRes) => {
-        if (err) res.json(getMongooseErrorMessage(err, req));
-        else if (opRes.upsertedCount > 0) {
-            res.json({msg: `Couldn't find pokemon with id ${req.params.id}; inserted new pokemon instead`})
-        }
-        else {
-            console.log(opRes);
-            res.json({msg: `Successfully updated pokemon with id ${req.params.id}`})
-        }
-    });
+app.put('/api/v1/pokemon/:id', bodyParser.json(), asyncWrapper(async (req, res) => { // - upsert a whole pokemon document
+    await pokemonModel.updateOne({ id: req.params.id }, req.body, { upsert: true, runValidators: true, new: true });
+    res.json({msg: `Successfully updated pokemon with id ${req.params.id}`});
+    // pokemonModel.updateOne({ id: req.params.id }, req.body, { upsert: true, runValidators: true, new: true }, (err, opRes) => {
+    //     if (err) res.json(getMongooseErrorMessage(err, req));
+    //     else if (opRes.upsertedCount > 0) {
+    //         res.json({msg: `Couldn't find pokemon with id ${req.params.id}; inserted new pokemon instead`})
+    //     }
+    //     else {
+    //         console.log(opRes);
+    //         res.json({msg: `Successfully updated pokemon with id ${req.params.id}`})
+    //     }
+    // });
 }))
 
-app.patch('/api/v1/pokemon/:id', bodyParser.json(), asyncWrapper((req, res) => { // - patch a pokemon document or a portion of the pokemon document
-    console.log(req.body);
-    pokemonModel.updateOne({ id: req.params.id }, req.body, { runValidators: true }, (err, opRes) => {
-        if (err) res.json(getMongooseErrorMessage(err, req));
-        else if (opRes.modifiedCount > 0) {
-            res.json({msg: `Successfully patched pokemon with id ${req.params.id}`})
-        }
-        else {
-            res.json({msg: `Patch failed. Pokemon with id ${req.params.id} does not exist`})
-        }
-    })
+app.patch('/api/v1/pokemon/:id', bodyParser.json(), asyncWrapper(async (req, res) => { // - patch a pokemon document or a portion of the pokemon document
+    await pokemonModel.updateOne({ id: req.params.id }, req.body, { runValidators: true });
+    res.json({msg: `Successfully patched pokemon with id ${req.params.id}`});
+    // pokemonModel.updateOne({ id: req.params.id }, req.body, { runValidators: true }, (err, opRes) => {
+    //     if (err) res.json(getMongooseErrorMessage(err, req));
+    //     else if (opRes.modifiedCount > 0) {
+    //         res.json({msg: `Successfully patched pokemon with id ${req.params.id}`})
+    //     }
+    //     else {
+    //         res.json({msg: `Patch failed. Pokemon with id ${req.params.id} does not exist`})
+    //     }
+    // })
 }))
 
-app.delete('/api/v1/pokemon/:id', asyncWrapper((req, res) => { // - delete a  pokemon
-    pokemonModel.deleteOne({ id: req.params.id },  (err, opRes) => {
-        if (err) {
-            console.error(err);
-            res.json(getMongooseErrorMessage(err, req));
-        } else if (opRes.deletedCount === 0){
-            console.log(opRes);
-            res.json({msg: `Failed to delete. Pokemon with id ${req.params.id} does not exists`});
-        } else {
-            console.log(opRes);
-            res.json({msg: `Pokemon with id ${req.params.id} successfully deleted`});
-        }
-    })
+app.delete('/api/v1/pokemon/:id', asyncWrapper(async (req, res) => { // - delete a  pokemon
+    await pokemonModel.deleteOne({ id: req.params.id });
+    res.json({msg: `Pokemon with id ${req.params.id} successfully deleted`});
+    // pokemonModel.deleteOne({ id: req.params.id },  (err, opRes) => {
+    //     if (err) {
+    //         console.error(err);
+    //         res.json(getMongooseErrorMessage(err, req));
+    //     } else if (opRes.deletedCount === 0){
+    //         console.log(opRes);
+    //         res.json({msg: `Failed to delete. Pokemon with id ${req.params.id} does not exists`});
+    //     } else {
+    //         console.log(opRes);
+    //         res.json({msg: `Pokemon with id ${req.params.id} successfully deleted`});
+    //     }
+    // })
 }))
 
 app.get('/api/doc', asyncWrapper((req, res) => {
