@@ -24,16 +24,6 @@ const asyncWrapper = (fn) => {
     }
 }
 
-function getMongooseErrorMessage(err, req) {
-    if (err.code == 11000) {
-        console.log(err);
-        return {msg: `Pokemon with id ${req.body.id} already exists`};
-    } else {
-        console.log(err);
-        return {msg: err.message};
-    }
-}
-
 app.listen(process.env.PORT || 5000, async () => {
     try {
         await mongoose.connect(dbURL);
@@ -239,7 +229,7 @@ app.all('*', (req, res) => {
     res.status(404).json({msg: "Improper request"});
 })
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
     console.error("Overrided default Express error handler...");
     console.error(err.stack);
     res.status(500).json({msg: err.message})
