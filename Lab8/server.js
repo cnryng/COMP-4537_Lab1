@@ -229,7 +229,7 @@ app.all('*', (req, res) => {
     res.status(404).json({msg: "Improper request"});
 })
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
     console.error("Overrided default Express error handler...");
     console.error(err.stack);
     res.status(500).json({msg: err.message})
