@@ -25,11 +25,11 @@ const asyncWrapper = (fn) => {
     }
 }
 
-let pokeModel;
+let pokemonModel;
 const start = asyncWrapper(async () => {
     await connectDB();
     const pokeSchema = await getTypes();
-    pokeModel = await populatePokemons(pokeSchema);
+    pokemonModel = await populatePokemons(pokeSchema);
 
     app.listen(process.env.PORT, (err) => {
         if (err)
