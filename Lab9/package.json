@@ -1,0 +1,8 @@
+{
+  "name": "Lab9",
+  "version": "1.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "dotenv": "^16.0.3"
+  }
+}
