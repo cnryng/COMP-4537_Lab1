@@ -2,10 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7b8afa39-e018-4c74-b2c2-dae86a879bfd" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/.idea/Lecture10.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/public/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/public/logo192.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/public/logo512.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/public/manifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/public/robots.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/src/App.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/src/App.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/src/App.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/src/Header.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/src/PokeList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/src/Pokemon.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/src/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/src/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/src/logo.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/src/reportWebVitals.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/client/src/setupTests.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lecture/Lecture10/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/errors.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lab8/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab8/.idea/vcs.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +73,7 @@
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="HTML" />
     <property name="javascript.nodejs.core.library.configured.version" value="14.15.1" />
     <property name="javascript.nodejs.core.library.typings.version" value="14.18.31" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Lab8" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../COMP4800-Projects/my-living-city" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -85,6 +111,7 @@
       <workItem from="1666060088130" duration="94000" />
       <workItem from="1667071309840" duration="603000" />
       <workItem from="1667229943889" duration="1370000" />
+      <workItem from="1667928503611" duration="1769000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1665049561983</created>
