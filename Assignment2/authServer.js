@@ -1,4 +1,5 @@
 const express = require("express")
+const cookieParser = require('cookie-parser');
 const { errorHandler } = require("./errorHandler.js")
 const { asyncWrapper } = require("./asyncWrapper.js")
 const dotenv = require("dotenv")
@@ -21,6 +22,23 @@ const start = asyncWrapper(async () => {
 start()
 
 app.use(express.json())
+app.use(cookieParser())
+
+app.get('/', (req, res) => {
+    if (req.cookies === undefined) {
+        throw new PokemonBadRequest("Please login")
+    }
+    const { token } = req.cookies;
+    if (!token) {
+        throw new PokemonBadRequest("Access denied")
+    }
+    try {
+        const verified = jwt.verify(token, process.env.TOKEN_SECRET) // nothing happens if token is valid
+        res.send("You are logged in");
+    } catch (err) {
+        throw new PokemonBadRequest("Invalid token")
+    }
+})
 
 app.get('/register', (req, res) => {
     res.send(
