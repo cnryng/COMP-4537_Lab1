@@ -34,7 +34,8 @@ start()
 app.use(express.json())
 
 const auth = (req, res, next) => {
-    const token = req.header('auth-token')
+    //const token = req.header('auth-token')
+    const { token } = req.cookies;
     if (!token) {
         throw new PokemonBadRequest("Access denied")
     }
@@ -124,4 +125,4 @@ app.all('*', (req, res) => {
     res.status(404).json({msg: "Improper request"});
 })
 
-app.use(errorHandler)
+app.use((err, req, res, next) => errorHandler(err, req, res, next))
