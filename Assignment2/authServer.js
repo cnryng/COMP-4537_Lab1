@@ -72,10 +72,11 @@ app.post('/login', asyncWrapper(async (req, res) => {
 
     res.header('auth-token', token)
 
-    res.cookie('auth-token', token)
+    res.cookie('token', token)
 
     res.send(user)
+    res.redirect("/")
 }))
 
 
-app.use(errorHandler)
+app.use((err, req, res, next) => errorHandler(err, req, res, next))
