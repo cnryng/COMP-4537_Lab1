@@ -18,7 +18,11 @@ app.listen(5000, () => {
 
 
 app.get('/login', (req, res) => {
-    res.send("<form action='/login' method='POST'><input type='text' name='username' value='admin' placeholder='username'><input type='password' name='password' value='1234' placeholder='password'><button type='submit'>Login</button></form>");
+    res.send("<form action='/login' method='POST'>" +
+        "<input type='text' name='username' value='admin' placeholder='username'>" +
+        "<input type='password' name='password' value='1234' placeholder='password'>" +
+        "<button type='submit'>Login</button>" +
+        "</form>");
 })
 
 app.use(express.urlencoded());
