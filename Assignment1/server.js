@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const bodyParser = require('body-parser');
 const https = require('https');
-
+const cors = require('cors');
 const app = express();
 const port = 5000;
 const dbURL = "mongodb+srv://test-user:9pmeJjRNqtysbXZF@testcluster.lcqmg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
@@ -21,6 +21,13 @@ function getMongooseErrorMessage(err, req) {
         return {msg: err.message};
     }
 }
+
+//app.use(cors);
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 app.listen(process.env.PORT || 5000, async () => {
     try {
