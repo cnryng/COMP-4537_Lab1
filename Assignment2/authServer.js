@@ -5,7 +5,7 @@ const dotenv = require("dotenv")
 dotenv.config();
 const userModel = require("./pokeUserModel.js")
 const { connectDB } = require("./connectDB.js")
-
+const { PokemonDbError, PokemonBadRequest } = require("./errors");
 
 const app = express()
 
@@ -22,9 +22,30 @@ start()
 
 app.use(express.json())
 
+app.get('/register', (req, res) => {
+    res.send(
+        "<form action='/register' method='POST'>" +
+            "<input type='text' name='username' value='' placeholder='username'>" +
+            "<input type='password' name='password' value='' placeholder='password'>" +
+            "<input type='text' name='email' value='' placeholder='email'>" +
+            "<button type='submit'>Register</button>" +
+        "</form>");
+})
+
+app.get('/login', (req, res) => {
+    res.send(
+        "<form action='/login' method='POST'>" +
+        "<input type='text' name='username' value='' placeholder='username'>" +
+        "<input type='password' name='password' value='' placeholder='password'>" +
+        "<button type='submit'>Login</button>" +
+        "</form>");
+})
+
+app.use(express.urlencoded());
 
 const bcrypt = require("bcrypt")
 app.post('/register', asyncWrapper(async (req, res) => {
+    console.log(req.body)
     const { username, password, email } = req.body
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password, salt)
@@ -50,6 +71,8 @@ app.post('/login', asyncWrapper(async (req, res) => {
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET)
 
     res.header('auth-token', token)
+
+    res.cookie('auth-token', token)
 
     res.send(user)
 }))
