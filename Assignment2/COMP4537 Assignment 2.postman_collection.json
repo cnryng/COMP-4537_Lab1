@@ -1,0 +1,482 @@
+{
+	"info": {
+		"_postman_id": "01cb14c7-a38a-4ca3-8b0f-b5d58ae02ddf",
+		"name": "COMP4537 Assignment 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Landing Page No Token",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Connor\",\r\n    \"password\": \"123456\",\r\n    \"email\": \"c@test.ca\",\r\n    \"isAdmin\": \"off\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Connor\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Admin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"ConnorAdmin\",\r\n    \"password\": \"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pokemon",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzY5ODUxYjY5ZGFlODU2ZjViY2UyY2EiLCJpYXQiOjE2Njc4NTk3NDd9.NM8RfMyqxkPS0_uIBUj_RA5JM1pemvQVMwtBLDflSSg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:6000/api/v1/pokemon/:id?appid=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YjA2MmNmZjQwYjY1MzIxMDI5YmEiLCJpYXQiOjE2Njg2NTcyNTR9.d_8tLU-UTEJ6C7fObSryOoXAj0-pu2NiM7saZYW1TJw",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6000",
+					"path": [
+						"api",
+						"v1",
+						"pokemon",
+						":id"
+					],
+					"query": [
+						{
+							"key": "appid",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YjA2MmNmZjQwYjY1MzIxMDI5YmEiLCJpYXQiOjE2Njg2NTcyNTR9.d_8tLU-UTEJ6C7fObSryOoXAj0-pu2NiM7saZYW1TJw"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pokemons",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzY5ODUxYjY5ZGFlODU2ZjViY2UyY2EiLCJpYXQiOjE2Njc4NTk3NDd9.NM8RfMyqxkPS0_uIBUj_RA5JM1pemvQVMwtBLDflSSg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:6000/api/v1/pokemons?appid=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YjA2MmNmZjQwYjY1MzIxMDI5YmEiLCJpYXQiOjE2Njg2NTcyNTR9.d_8tLU-UTEJ6C7fObSryOoXAj0-pu2NiM7saZYW1TJw",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6000",
+					"path": [
+						"api",
+						"v1",
+						"pokemons"
+					],
+					"query": [
+						{
+							"key": "appid",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YjA2MmNmZjQwYjY1MzIxMDI5YmEiLCJpYXQiOjE2Njg2NTcyNTR9.d_8tLU-UTEJ6C7fObSryOoXAj0-pu2NiM7saZYW1TJw"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pokemon Invalid Token",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzY5ODUxYjY5ZGFlODU2ZjViY2UyY2EiLCJpYXQiOjE2Njc4NTk3NDd9.NM8RfMyqxkPS0_uIBUj_RA5JM1pemvQVMwtBLDflSSg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:6000/api/v1/pokemon/:id?appid=test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6000",
+					"path": [
+						"api",
+						"v1",
+						"pokemon",
+						":id"
+					],
+					"query": [
+						{
+							"key": "appid",
+							"value": "test"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pokemon is Admin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 10034,\r\n        \"name\": {\r\n            \"english\": \"Test\",\r\n            \"japanese\": \"\",\r\n            \"chinese\": \"\",\r\n            \"french\": \"\"\r\n        },\r\n        \"type\": [\r\n            \"Poison\"\r\n        ],\r\n        \"base\": {\r\n            \"HP\": 45,\r\n            \"Attack\": 49,\r\n            \"Defense\": 49,\r\n            \"Sp Attack\": 65,\r\n            \"Sp Defense\": 65,\r\n            \"Speed\": 45\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:6000/api/v1/pokemon?appid=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YjA2MmNmZjQwYjY1MzIxMDI5YmEiLCJpYXQiOjE2Njg2NTgyMTB9.6QXyWL2owrJfg3pHSTyuQTUXNInn_Ajs7i0y4akTuZ8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6000",
+					"path": [
+						"api",
+						"v1",
+						"pokemon"
+					],
+					"query": [
+						{
+							"key": "appid",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YjA2MmNmZjQwYjY1MzIxMDI5YmEiLCJpYXQiOjE2Njg2NTgyMTB9.6QXyWL2owrJfg3pHSTyuQTUXNInn_Ajs7i0y4akTuZ8"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pokemon Image is Admin",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 10034,\r\n        \"name\": {\r\n            \"english\": \"Test\",\r\n            \"japanese\": \"\",\r\n            \"chinese\": \"\",\r\n            \"french\": \"\"\r\n        },\r\n        \"type\": [\r\n            \"Poison\"\r\n        ],\r\n        \"base\": {\r\n            \"HP\": 45,\r\n            \"Attack\": 49,\r\n            \"Defense\": 49,\r\n            \"Sp Attack\": 65,\r\n            \"Sp Defense\": 65,\r\n            \"Speed\": 45\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:6000/api/v1/pokemonImage/:id?appid=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YjA2MmNmZjQwYjY1MzIxMDI5YmEiLCJpYXQiOjE2Njg2NTgyMTB9.6QXyWL2owrJfg3pHSTyuQTUXNInn_Ajs7i0y4akTuZ8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6000",
+					"path": [
+						"api",
+						"v1",
+						"pokemonImage",
+						":id"
+					],
+					"query": [
+						{
+							"key": "appid",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YjA2MmNmZjQwYjY1MzIxMDI5YmEiLCJpYXQiOjE2Njg2NTgyMTB9.6QXyWL2owrJfg3pHSTyuQTUXNInn_Ajs7i0y4akTuZ8"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upsert Pokemon is Admin",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 1,\r\n        \"name\": {\r\n            \"english\": \"1234567890\",\r\n            \"japanese\": \"\",\r\n            \"chinese\": \"\",\r\n            \"french\": \"\"\r\n        },\r\n        \"type\": [\r\n            \"Dragon\",\r\n            \"Poison\"\r\n        ],\r\n        \"base\": {\r\n            \"HP\": 45,\r\n            \"Attack\": 49,\r\n            \"Defense\": 49,\r\n            \"Sp Attack\": 65,\r\n            \"Sp Defense\": 65,\r\n            \"Speed\": 45\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:6000/api/v1/pokemon/:id?appid=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YjA2MmNmZjQwYjY1MzIxMDI5YmEiLCJpYXQiOjE2Njg2NTgyMTB9.6QXyWL2owrJfg3pHSTyuQTUXNInn_Ajs7i0y4akTuZ8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6000",
+					"path": [
+						"api",
+						"v1",
+						"pokemon",
+						":id"
+					],
+					"query": [
+						{
+							"key": "appid",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YjA2MmNmZjQwYjY1MzIxMDI5YmEiLCJpYXQiOjE2Njg2NTgyMTB9.6QXyWL2owrJfg3pHSTyuQTUXNInn_Ajs7i0y4akTuZ8"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Pokemon is Admin",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 1,\r\n        \"name\": {\r\n            \"english\": \"1234567890\",\r\n            \"japanese\": \"\",\r\n            \"chinese\": \"\",\r\n            \"french\": \"\"\r\n        },\r\n        \"type\": [\r\n            \"Dragon\",\r\n            \"Poison\"\r\n        ],\r\n        \"base\": {\r\n            \"HP\": 45,\r\n            \"Attack\": 49,\r\n            \"Defense\": 49,\r\n            \"Sp Attack\": 65,\r\n            \"Sp Defense\": 65,\r\n            \"Speed\": 45\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:6000/api/v1/pokemon/:id?appid=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YWUyNmY2ZWQ2ODQ3Y2ZhZWI3ZTEiLCJpYXQiOjE2Njg2NTY2ODN9.NM2d8RBXBXG7E-l44YtTmAx8rdgMDuc4KuedWUfQOLg\n",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6000",
+					"path": [
+						"api",
+						"v1",
+						"pokemon",
+						":id"
+					],
+					"query": [
+						{
+							"key": "appid",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YWUyNmY2ZWQ2ODQ3Y2ZhZWI3ZTEiLCJpYXQiOjE2Njg2NTY2ODN9.NM2d8RBXBXG7E-l44YtTmAx8rdgMDuc4KuedWUfQOLg\n"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Pokemon is Admin",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:6000/api/v1/pokemon/:id?appid=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YjA2MmNmZjQwYjY1MzIxMDI5YmEiLCJpYXQiOjE2Njg2NTgyMTB9.6QXyWL2owrJfg3pHSTyuQTUXNInn_Ajs7i0y4akTuZ8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6000",
+					"path": [
+						"api",
+						"v1",
+						"pokemon",
+						":id"
+					],
+					"query": [
+						{
+							"key": "appid",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YjA2MmNmZjQwYjY1MzIxMDI5YmEiLCJpYXQiOjE2Njg2NTgyMTB9.6QXyWL2owrJfg3pHSTyuQTUXNInn_Ajs7i0y4akTuZ8"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "10034"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pokemon Existing not admin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 10034,\r\n        \"name\": {\r\n            \"english\": \"Test\",\r\n            \"japanese\": \"\",\r\n            \"chinese\": \"\",\r\n            \"french\": \"\"\r\n        },\r\n        \"type\": [\r\n            \"Poison\"\r\n        ],\r\n        \"base\": {\r\n            \"HP\": 45,\r\n            \"Attack\": 49,\r\n            \"Defense\": 49,\r\n            \"Sp Attack\": 65,\r\n            \"Sp Defense\": 65,\r\n            \"Speed\": 45\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:6000/api/v1/pokemon?appid=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YjA2MmNmZjQwYjY1MzIxMDI5YmEiLCJpYXQiOjE2Njg2NTcyNTR9.d_8tLU-UTEJ6C7fObSryOoXAj0-pu2NiM7saZYW1TJw",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6000",
+					"path": [
+						"api",
+						"v1",
+						"pokemon"
+					],
+					"query": [
+						{
+							"key": "appid",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YjA2MmNmZjQwYjY1MzIxMDI5YmEiLCJpYXQiOjE2Njg2NTcyNTR9.d_8tLU-UTEJ6C7fObSryOoXAj0-pu2NiM7saZYW1TJw"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
