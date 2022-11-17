@@ -1,6 +1,6 @@
 const express = require("express")
 const jwt = require("jsonwebtoken")
-const { PokemonDbError } = require("./errors");
+const { PokemonDbError, PokemonNotFoundError, PokemonBadRequest } = require("./errors");
 const { getTypes } = require("./getTypes");
 const { populatePokemons } = require("./populatePokemons");
 const { connectDB } = require("./connectDB");
@@ -11,8 +11,6 @@ const dotenv = require("dotenv")
 dotenv.config();
 
 const userModel = require("./pokeUserModel.js")
-const {PokemonNotFoundError} = require("./errors");
-const {PokemonBadRequest} = require("./errors");
 const app = express()
 
 app.use(function(req, res, next) {
@@ -38,22 +36,25 @@ start()
 
 app.use(express.json())
 
-const auth = (req, res, next) => {
-    if (!req.query.appid) {
-        throw new PokemonBadRequest("Need token")
-    }
-    const token = req.query.appid;
+const auth = asyncWrapper(async (req, res, next)  => {
     try {
-        const verified = jwt.verify(token, process.env.TOKEN_SECRET) // nothing happens if token is valid
+        if (!req.query.appid) {
+            throw new PokemonBadRequest("Need token")
+        }
+        const token = req.query.appid;
+        //const verified = jwt.verify(token, process.env.TOKEN_SECRET) // nothing happens if token is valid
+        const user = await userModel.findOne({ token });
+        console.log(user);
+        if (!user) {
+            throw new PokemonBadRequest("Invalid token used to access protected route");
+        }
         next()
     } catch (err) {
-        throw new PokemonBadRequest("Invalid token")
+        throw new PokemonBadRequest(err.message)
     }
-}
+})
 
-app.use(auth);
-
-app.get('/api/v1/pokemons', asyncWrapper (async (req, res) => { // - get all the pokemons after the 10th. List only Two.
+app.get('/api/v1/pokemons', auth, asyncWrapper (async (req, res) => { // - get all the pokemons after the 10th. List only Two.
     function isNumber(n) { return !isNaN(parseFloat(n)) && !isNaN(n - 0) }
 
     if ((req.query.after && !isNumber(req.query.after)) || (req.query.count && !isNumber(req.query.count))) {
@@ -70,7 +71,7 @@ app.get('/api/v1/pokemons', asyncWrapper (async (req, res) => { // - get all the
 
 }))
 
-app.get('/api/v1/pokemon/:id', asyncWrapper(async (req, res) => { // - get a pokemon
+app.get('/api/v1/pokemon/:id', auth, asyncWrapper(async (req, res) => { // - get a pokemon
 
     const pokemon = await pokemonModel.find({ id: req.params.id });
 
@@ -82,13 +83,16 @@ app.get('/api/v1/pokemon/:id', asyncWrapper(async (req, res) => { // - get a pok
 
 }))
 
-const adminAuth = async (req, res, next) => {
-    if (!req.query.appid) {
-        throw new PokemonBadRequest("Need token")
-    }
-    const token = req.query.appid;
+const adminAuth = asyncWrapper(async (req, res, next) => {
     try {
-        const user = await userModel.find({ token });
+        if (!req.query.appid) {
+            throw new PokemonBadRequest("Need token")
+        }
+        const token = req.query.appid;
+        const user = await userModel.findOne({ token });
+        if (!user) {
+            throw new PokemonBadRequest("Invalid token used to access protected route");
+        }
         if (!user.isAdmin) {
             throw new PokemonBadRequest("Cannot access admin protected route");
         }
@@ -96,7 +100,7 @@ const adminAuth = async (req, res, next) => {
     } catch (err) {
         throw new PokemonBadRequest(err.message)
     }
-}
+})
 
 app.use(adminAuth)
 
@@ -147,4 +151,4 @@ app.all('*', (req, res) => {
     res.status(404).json({msg: "Improper request"});
 })
 
-app.use((err, req, res, next) => errorHandler(err, req, res, next))
+app.use(errorHandler)
