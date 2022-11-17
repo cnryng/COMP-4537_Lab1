@@ -26,6 +26,10 @@ const schema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    token: {
+        type: String,
+        default: null
     }
 })
 
