@@ -81,6 +81,24 @@
 			"response": []
 		},
 		{
+			"name": "Login No User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "Login Wrong Password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
 			"name": "Login Admin",
 			"request": {
 				"method": "POST",
@@ -129,6 +147,86 @@
 		},
 		{
 			"name": "Get Pokemon",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzY5ODUxYjY5ZGFlODU2ZjViY2UyY2EiLCJpYXQiOjE2Njc4NTk3NDd9.NM8RfMyqxkPS0_uIBUj_RA5JM1pemvQVMwtBLDflSSg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:6000/api/v1/pokemon/:id?appid=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YjA2MmNmZjQwYjY1MzIxMDI5YmEiLCJpYXQiOjE2Njg2NTcyNTR9.d_8tLU-UTEJ6C7fObSryOoXAj0-pu2NiM7saZYW1TJw",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6000",
+					"path": [
+						"api",
+						"v1",
+						"pokemon",
+						":id"
+					],
+					"query": [
+						{
+							"key": "appid",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YjA2MmNmZjQwYjY1MzIxMDI5YmEiLCJpYXQiOjE2Njg2NTcyNTR9.d_8tLU-UTEJ6C7fObSryOoXAj0-pu2NiM7saZYW1TJw"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pokemon No Token",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzY5ODUxYjY5ZGFlODU2ZjViY2UyY2EiLCJpYXQiOjE2Njc4NTk3NDd9.NM8RfMyqxkPS0_uIBUj_RA5JM1pemvQVMwtBLDflSSg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:6000/api/v1/pokemon/:id?appid=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YjA2MmNmZjQwYjY1MzIxMDI5YmEiLCJpYXQiOjE2Njg2NTcyNTR9.d_8tLU-UTEJ6C7fObSryOoXAj0-pu2NiM7saZYW1TJw",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6000",
+					"path": [
+						"api",
+						"v1",
+						"pokemon",
+						":id"
+					],
+					"query": [
+						{
+							"key": "appid",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc1YjA2MmNmZjQwYjY1MzIxMDI5YmEiLCJpYXQiOjE2Njg2NTcyNTR9.d_8tLU-UTEJ6C7fObSryOoXAj0-pu2NiM7saZYW1TJw"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pokemon Invalid Token",
 			"request": {
 				"method": "GET",
 				"header": [
