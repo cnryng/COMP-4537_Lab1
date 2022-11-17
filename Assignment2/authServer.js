@@ -28,20 +28,26 @@ app.use(cookieParser())
 app.get('/', asyncWrapper(async (req, res) => {
     const { token } = req.cookies;
     if (!token) {
-        res.send("Welcome. Please register or login.")
+        res.send("<h1>Welcome. Please register or login.</h1>" +
+            "<form action='/login' method='GET'>" +
+            "<button type='submit'>Login Here</button>" +
+            "</form>" +
+            "<form action='/register' method='GET'>" +
+            "<button type='submit'>Register Here</button>" +
+            "</form>"
+        )
     }
-    try {
-        //const verified = jwt.verify(token, process.env.TOKEN_SECRET) // nothing happens if token is valid
-        const user = await userModel.findOne({ token })
-        res.send("<h1>Successfully logged in</h1>" +
-            "<form action='/logout' method='POST'>" +
-            "<button type='submit'>Log out</button>" +
-            "</form>");
-        //const pokemonData = await axios.get(`http://localhost:${process.env.PORT}/api/v1/pokemons`);
-        //res.json(pokemonData.data);
-    } catch (err) {
-        res.send(err);
+    //const verified = jwt.verify(token, process.env.TOKEN_SECRET) // nothing happens if token is valid
+    const user = await userModel.findOne({ token });
+    if(!user) {
+        throw new PokemonBadRequest("Token no longer valid");
     }
+    res.send("<h1>Successfully logged in</h1>" +
+        "<form action='/logout' method='POST'>" +
+        "<button type='submit'>Log out</button>" +
+        "</form>");
+    //const pokemonData = await axios.get(`http://localhost:${process.env.PORT}/api/v1/pokemons`);
+    //res.json(pokemonData.data);
 }))
 
 app.get('/register', (req, res) => {
@@ -50,6 +56,8 @@ app.get('/register', (req, res) => {
             "<input type='text' name='username' value='' placeholder='username'>" +
             "<input type='password' name='password' value='' placeholder='password'>" +
             "<input type='text' name='email' value='' placeholder='email'>" +
+            "<label>Is an Admin?</label>" +
+            "<input type='checkbox' name='isAdmin'>" +
             "<button type='submit'>Register</button>" +
         "</form>");
 })
@@ -69,12 +77,15 @@ const bcrypt = require("bcrypt")
 app.post('/register', asyncWrapper(async (req, res) => {
     console.log(req.body)
     const { username, password, email } = req.body
+    req.body.isAdmin = req.body.isAdmin === 'on'
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password, salt)
     const userWithHashedPassword = { ...req.body, password: hashedPassword }
 
     const user = await userModel.create(userWithHashedPassword)
-    res.send(user)
+    console.log(user)
+    //res.send(user)
+    res.redirect("/login")
 }))
 
 const jwt = require("jsonwebtoken")
@@ -92,9 +103,10 @@ app.post('/login', asyncWrapper(async (req, res) => {
     // Create and assign a token
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET)
 
-    await userModel.update({ username }, { $set: { token }})
+    await userModel.updateOne({ username }, { $set: { token }})
 
-    res.header('auth-token', token)
+    //res.header('auth-token', token)
+    console.log(token)
 
     res.cookie('token', token)
 
@@ -102,7 +114,10 @@ app.post('/login', asyncWrapper(async (req, res) => {
 }))
 
 app.post('/logout', asyncWrapper(async (req, res) => {
-
+    const { token } = req.cookies
+    await userModel.updateOne( { token }, { $set: { token: null }})
+    res.clearCookie("token")
+    res.redirect("/")
 }))
 
 
