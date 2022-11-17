@@ -39,7 +39,6 @@ start()
 app.use(express.json())
 
 const auth = (req, res, next) => {
-
     if (!req.query.appid) {
         throw new PokemonBadRequest("Need token")
     }
@@ -71,11 +70,6 @@ app.get('/api/v1/pokemons', asyncWrapper (async (req, res) => { // - get all the
 
 }))
 
-app.post('/api/v1/pokemon', asyncWrapper (async (req, res) => { // - create a new pokemon
-    await pokemonModel.create(req.body);
-    res.json({msg: "Successfully inserted pokemon"});
-}))
-
 app.get('/api/v1/pokemon/:id', asyncWrapper(async (req, res) => { // - get a pokemon
 
     const pokemon = await pokemonModel.find({ id: req.params.id });
@@ -86,6 +80,29 @@ app.get('/api/v1/pokemon/:id', asyncWrapper(async (req, res) => { // - get a pok
 
     res.json(pokemon);
 
+}))
+
+const adminAuth = async (req, res, next) => {
+    if (!req.query.appid) {
+        throw new PokemonBadRequest("Need token")
+    }
+    const token = req.query.appid;
+    try {
+        const user = await userModel.find({ token });
+        if (!user.isAdmin) {
+            throw new PokemonBadRequest("Cannot access admin protected route");
+        }
+        next()
+    } catch (err) {
+        throw new PokemonBadRequest(err.message)
+    }
+}
+
+app.use(adminAuth)
+
+app.post('/api/v1/pokemon', asyncWrapper (async (req, res) => { // - create a new pokemon
+    await pokemonModel.create(req.body);
+    res.json({msg: "Successfully inserted pokemon"});
 }))
 
 app.get('/api/v1/pokemonImage/:id', asyncWrapper(async (req, res) => { // - get the url of a pokemon
