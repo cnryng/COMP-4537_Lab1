@@ -1,0 +1,3 @@
+- Start authServer then appServer to avoid dropping pokemons collection
+- JWT is generated on login and validated via database
+- When user logs out, their JWT is removed from database and cleared from cookies
