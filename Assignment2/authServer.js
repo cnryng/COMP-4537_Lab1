@@ -1,5 +1,6 @@
 const express = require("express")
 const cookieParser = require('cookie-parser');
+const axios = require('axios');
 const { errorHandler } = require("./errorHandler.js")
 const { asyncWrapper } = require("./asyncWrapper.js")
 const dotenv = require("dotenv")
@@ -24,21 +25,24 @@ start()
 app.use(express.json())
 app.use(cookieParser())
 
-app.get('/', (req, res) => {
-    if (req.cookies === undefined) {
-        throw new PokemonBadRequest("Please login")
-    }
+app.get('/', asyncWrapper(async (req, res) => {
     const { token } = req.cookies;
     if (!token) {
-        throw new PokemonBadRequest("Access denied")
+        res.send("Welcome. Please register or login.")
     }
     try {
-        const verified = jwt.verify(token, process.env.TOKEN_SECRET) // nothing happens if token is valid
-        res.send("You are logged in");
+        //const verified = jwt.verify(token, process.env.TOKEN_SECRET) // nothing happens if token is valid
+        const user = await userModel.findOne({ token })
+        res.send("<h1>Successfully logged in</h1>" +
+            "<form action='/logout' method='POST'>" +
+            "<button type='submit'>Log out</button>" +
+            "</form>");
+        //const pokemonData = await axios.get(`http://localhost:${process.env.PORT}/api/v1/pokemons`);
+        //res.json(pokemonData.data);
     } catch (err) {
-        throw new PokemonBadRequest("Invalid token")
+        res.send(err);
     }
-})
+}))
 
 app.get('/register', (req, res) => {
     res.send(
@@ -88,13 +92,18 @@ app.post('/login', asyncWrapper(async (req, res) => {
     // Create and assign a token
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET)
 
+    await userModel.update({ username }, { $set: { token }})
+
     res.header('auth-token', token)
 
     res.cookie('token', token)
 
-    res.send(user)
     res.redirect("/")
 }))
 
+app.post('/logout', asyncWrapper(async (req, res) => {
 
-app.use((err, req, res, next) => errorHandler(err, req, res, next))
+}))
+
+
+app.use(errorHandler)
