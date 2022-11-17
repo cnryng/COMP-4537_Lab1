@@ -30,6 +30,10 @@ const schema = new mongoose.Schema({
     token: {
         type: String,
         default: null
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
     }
 })
 
