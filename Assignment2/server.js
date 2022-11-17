@@ -15,6 +15,11 @@ const {PokemonNotFoundError} = require("./errors");
 const {PokemonBadRequest} = require("./errors");
 const app = express()
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 let pokemonModel;
 const start = asyncWrapper(async () => {
@@ -34,11 +39,11 @@ start()
 app.use(express.json())
 
 const auth = (req, res, next) => {
-    //const token = req.header('auth-token')
-    const { token } = req.cookies;
-    if (!token) {
-        throw new PokemonBadRequest("Access denied")
+
+    if (!req.query.appid) {
+        throw new PokemonBadRequest("Need token")
     }
+    const token = req.query.appid;
     try {
         const verified = jwt.verify(token, process.env.TOKEN_SECRET) // nothing happens if token is valid
         next()
