@@ -5,14 +5,27 @@ function pagination({ numberOfPages, currentPage, setCurrentPage }) {
   for (let i = 1; i <= numberOfPages; i++) {
     pageNumbers.push(i)
   }
+
+  const setPage = (number) => {
+      setCurrentPage(number);
+      console.log(number);
+      localStorage.setItem('lastPage', number);
+  }
+
   const nextPage = () => {
-    if (currentPage !== numberOfPages) setCurrentPage(currentPage + 1)
+    if (currentPage !== numberOfPages) {
+      setCurrentPage(currentPage + 1);
+      console.log(currentPage + 1);
+      localStorage.setItem('lastPage', String(currentPage + 1));
+    }
   }
   const prevPage = () => {
-    if (currentPage !== 1) setCurrentPage(currentPage - 1)
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
+      console.log(currentPage - 1);
+      localStorage.setItem('lastPage', String(currentPage - 1));
+    }
   }
-
-
 
   return (
     <div>
@@ -22,7 +35,7 @@ function pagination({ numberOfPages, currentPage, setCurrentPage }) {
         pageNumbers.map(number => {
           if (number < currentPage + 6 && number > currentPage - 5)
             return (<>
-              <button onClick={() => setCurrentPage(number)} className={(number == currentPage) ? 'active' : ''}>
+              <button onClick={() => setPage(number)} className={(number === currentPage) ? 'active' : ''}>
                 {number}
               </button>
             </>)
