@@ -9,12 +9,19 @@ function App() {
   const [pokemonsPerPage] = useState(10);
 
   useEffect(() => {
-    axios.get('https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/pokedex.json')
-      .then(res => res.data)
-      .then(res => {
-        setPokemons(res)
-      })
-      .catch(err => console.log("err", err))
+    if (localStorage.getItem("pokemons")) {
+        console.log(localStorage.getItem("pokemons"));
+        setPokemons(JSON.parse(localStorage.getItem("pokemons")));
+    } else {
+        axios.get('https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/pokedex.json')
+            .then(res => res.data)
+            .then(res => {
+                setPokemons(res);
+                //localStorage.setItem("pokemons", JSON.stringify(res));
+                console.log("triggered useEffect");
+            })
+            .catch(err => console.log("err", err))
+    }
   }, [])
 
   const indexOfLastRecord = currentPage * pokemonsPerPage;
