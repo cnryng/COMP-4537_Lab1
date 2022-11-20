@@ -20,7 +20,7 @@ function pagination({ numberOfPages, currentPage, setCurrentPage }) {
 
       {
         pageNumbers.map(number => {
-          if (number < currentPage + 6 && number > currentPage - 6)
+          if (number < currentPage + 6 && number > currentPage - 5)
             return (<>
               <button onClick={() => setCurrentPage(number)} className={(number == currentPage) ? 'active' : ''}>
                 {number}
