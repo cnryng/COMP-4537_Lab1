@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react'
 import Page from './Page'
 import Pagination from './Pagination';
 import axios from 'axios'
+
 function App() {
   const [pokemons, setPokemons] = useState([])
-
   const [currentPage, setCurrentPage] = useState(1);
   const [pokemonsPerPage] = useState(10);
 
   useEffect(() => {
+    if (localStorage.getItem("lastPage")) {
+        console.log("Last page was: ", parseInt(localStorage.getItem("lastPage")));
+        setCurrentPage(parseInt(localStorage.getItem("lastPage")));
+    }
     if (localStorage.getItem("pokemons")) {
         console.log(localStorage.getItem("pokemons"));
         setPokemons(JSON.parse(localStorage.getItem("pokemons")));
@@ -17,7 +21,7 @@ function App() {
             .then(res => res.data)
             .then(res => {
                 setPokemons(res);
-                //localStorage.setItem("pokemons", JSON.stringify(res));
+                localStorage.setItem("pokemons", JSON.stringify(res));
                 console.log("triggered useEffect");
             })
             .catch(err => console.log("err", err))
