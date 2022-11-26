@@ -6,8 +6,7 @@ import Search from "./Search";
 import axios from 'axios'
 
 function App() {
-    const [pokemons, setPokemons] = useState([])
-    const [currentPage, setCurrentPage] = useState(1);
+
     const [checkedState, setCheckedState] = useState([]);
     const types = useRef([]);
 
@@ -21,19 +20,11 @@ function App() {
             .catch(err => console.log("err", err))
     }, [])
 
-    //const indexOfLastRecord = currentPage * pokemonsPerPage;
-    //const indexOfFirstRecord = indexOfLastRecord - pokemonsPerPage;
-    //const currentPokemons = pokemons.slice(indexOfFirstRecord, indexOfLastRecord)
-    //const numberOfPages = Math.ceil(pokemons.length / pokemonsPerPage);
 
     return (
         <>
             <Search types={types} checkedState={checkedState} setCheckedState={setCheckedState} />
             <FilteredPagination
-                pokemons={pokemons}
-                setPokemons={setPokemons}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
                 checkedState={checkedState}
                 types={types}
             />
