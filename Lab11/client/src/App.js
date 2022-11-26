@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import Page from './Page'
 import Pagination from './Pagination';
 import axios from 'axios'
@@ -7,6 +7,8 @@ function App() {
   const [pokemons, setPokemons] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
   const [pokemonsPerPage] = useState(10);
+  const [checkedState, setCheckedState] = useState([]);
+  const types = useRef([]);
 
   useEffect(() => {
     if (localStorage.getItem("lastPage")) {
@@ -25,6 +27,11 @@ function App() {
                 console.log("triggered useEffect");
             })
             .catch(err => console.log("err", err))
+        axios.get('https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/types.json').then((res) => {
+            types.current = res.data.map(type => type.english);
+            setCheckedState(new Array(res.data.length).fill(false));
+            //console.log(types);
+        });
     }
   }, [])
 
