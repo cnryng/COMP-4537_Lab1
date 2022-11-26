@@ -12,17 +12,6 @@ function App() {
     const types = useRef([]);
 
     useEffect(() => {
-        if (localStorage.getItem("lastPage")) {
-            console.log("Last page was: ", parseInt(localStorage.getItem("lastPage")));
-            setCurrentPage(parseInt(localStorage.getItem("lastPage")));
-        }
-        if (localStorage.getItem("pokemons")) {
-            console.log(localStorage.getItem("pokemons"));
-            setPokemons(JSON.parse(localStorage.getItem("pokemons")));
-        }
-    }, [])
-
-    useEffect(() => {
         axios.get('https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/types.json')
             .then((res) => {
                 types.current = res.data.map(type => type.english);
