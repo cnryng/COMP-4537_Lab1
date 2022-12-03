@@ -36,18 +36,27 @@ app.get('/', asyncWrapper(async (req, res) => {
             "<button type='submit'>Register Here</button>" +
             "</form>"
         )
+    } else {
+        //const verified = jwt.verify(token, process.env.TOKEN_SECRET) // nothing happens if token is valid
+        const user = await userModel.findOne({ token });
+        if(!user) {
+            throw new PokemonBadRequest("Token no longer valid");
+        }
+        const pokemonData = await axios({
+            method: 'get',
+            url: 'http://localhost:6000/api/v1/pokemons',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                "token": token
+            }
+        })
+        console.log(pokemonData);
+        res.redirect("http://localhost:3000")
+        // res.send("<h1>Successfully logged in</h1>" +
+        //     "<form action='/logout' method='POST'>" +
+        //     "<button type='submit'>Log out</button>" +
+        //     "</form>");
     }
-    //const verified = jwt.verify(token, process.env.TOKEN_SECRET) // nothing happens if token is valid
-    const user = await userModel.findOne({ token });
-    if(!user) {
-        throw new PokemonBadRequest("Token no longer valid");
-    }
-    res.send("<h1>Successfully logged in</h1>" +
-        "<form action='/logout' method='POST'>" +
-        "<button type='submit'>Log out</button>" +
-        "</form>");
-    //const pokemonData = await axios.get(`http://localhost:${process.env.PORT}/api/v1/pokemons`);
-    //res.json(pokemonData.data);
 }))
 
 app.get('/register', (req, res) => {
