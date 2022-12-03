@@ -13,11 +13,14 @@ dotenv.config();
 const userModel = require("./pokeUserModel.js")
 const app = express()
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+const cors = require('cors');
+app.use(cors());
+
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+// });
 
 let pokemonModel;
 const start = asyncWrapper(async () => {
@@ -38,10 +41,11 @@ app.use(express.json())
 
 const auth = asyncWrapper(async (req, res, next)  => {
     try {
-        if (!req.query.appid) {
+        if (!req.headers.token) {
             throw new PokemonBadRequest("Need token")
         }
-        const token = req.query.appid;
+        console.log(req.headers);
+        const token = req.headers.token;
         //const verified = jwt.verify(token, process.env.TOKEN_SECRET) // nothing happens if token is valid
         const user = await userModel.findOne({ token });
         console.log(user);
