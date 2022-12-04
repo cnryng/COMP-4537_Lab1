@@ -42,20 +42,12 @@ app.get('/', asyncWrapper(async (req, res) => {
         if(!user) {
             throw new PokemonBadRequest("Token no longer valid");
         }
-        // const pokemonData = await axios({
-        //     method: 'get',
-        //     url: `http://localhost:${process.env.PORT}/api/v1/pokemons`,
-        //     headers: {
-        //         'Access-Control-Allow-Origin': '*',
-        //         "token": token
-        //     }
-        // })
-        // console.log(pokemonData);
-        res.redirect("http://localhost:3000")
-        // res.send("<h1>Successfully logged in</h1>" +
-        //     "<form action='/logout' method='POST'>" +
-        //     "<button type='submit'>Log out</button>" +
-        //     "</form>");
+
+        if (user.isAdmin) {
+            res.redirect("http://localhost:3000/admin")
+        } else {
+            res.redirect("http://localhost:3000")
+        }
     }
 }))
 
@@ -118,7 +110,6 @@ app.post('/login', asyncWrapper(async (req, res) => {
     console.log(token)
 
     res.cookie('token', token)
-
     res.redirect("/")
 }))
 
