@@ -39,7 +39,7 @@ function AdminDashboard() {
                 "token": Cookies.get('token')
             }
         });
-        if (mostApiRequests.length > 0) {
+        if (getMostApiRequests.data.length > 0) {
             setMostApiRequests(getMostApiRequests.data[0]);
         }
 
