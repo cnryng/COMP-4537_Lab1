@@ -130,12 +130,24 @@ const adminAuth = asyncWrapper(async (req, res, next) => {
 app.use(adminAuth)
 
 app.get('/api/v1/uniqueRequests', asyncWrapper (async (req, res) => {
-    const data = await apiRequestModel.find().distinct('token');
+    const data = await apiRequestModel.find().distinct('username');
     res.json(data);
 }))
 
 app.get('/api/v1/mostRequests', asyncWrapper (async (req, res) => {
-    const data = await apiRequestModel.find().distinct('token');
+    const data = await apiRequestModel.aggregate([
+        {
+            $group: {
+                _id: '$username',
+                count: { $sum: 1 }
+            }
+        },
+        {
+            $sort: {
+                count: -1
+            }
+        }
+    ])
     res.json(data);
 }))
 
