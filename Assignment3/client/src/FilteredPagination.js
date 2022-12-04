@@ -2,13 +2,21 @@ import React, { useEffect, useState } from 'react'
 import Page from './Page'
 import Pagination from './Pagination';
 import axios from 'axios'
+import Cookies from 'js-cookie';
+
 function FilteredPagination({ checkedState, types }) {
   const [pokemons, setPokemons] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
   const pokemonsPerPage = 10;
 
     useEffect(() => {
-        axios.get('https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/pokedex.json')
+        axios({
+            method: 'get',
+            url: 'http://localhost:5001/api/v1/pokemons',
+            headers: {
+                "token": Cookies.get('token')
+            }
+        })
             .then(res => res.data)
             .then(data => {
                 // filter based on the checkedState
