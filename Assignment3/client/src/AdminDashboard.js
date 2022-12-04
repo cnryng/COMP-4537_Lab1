@@ -8,7 +8,7 @@ function AdminDashboard() {
 
     const [isAdmin, setIsAdmin] = useState(false);
     const [apiRequests, setApiRequests] = useState([]);
-    const [mostApiRequests, setMostApiRequests] = useState("");
+    const [mostApiRequests, setMostApiRequests] = useState({_id: "No requests yet", count: 0});
     const [fourHundredRequests, setFourHundredRequests] = useState(0);
 
     useEffect(() => {
@@ -38,8 +38,10 @@ function AdminDashboard() {
             headers: {
                 "token": Cookies.get('token')
             }
-        })
-        setMostApiRequests(getMostApiRequests.data[0]);
+        });
+        if (mostApiRequests.length > 0) {
+            setMostApiRequests(getMostApiRequests.data[0]);
+        }
 
         const get400Requests = await axios({
             method: 'get',
