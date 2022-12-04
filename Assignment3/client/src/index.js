@@ -13,7 +13,7 @@ root.render(
           <BrowserRouter>
               <Routes>
                   <Route path="/" element={<App />} />
-                  <Route path="/admin" element={<AdminDashboard isAdmin={true}/>} />
+                  <Route path="/admin" element={<AdminDashboard/>} />
               </Routes>
           </BrowserRouter>
       </React.StrictMode>
