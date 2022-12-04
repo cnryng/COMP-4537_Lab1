@@ -11,6 +11,7 @@ const dotenv = require("dotenv")
 dotenv.config();
 
 const userModel = require("./pokeUserModel.js")
+const apiRequestModel = require("./apiRequestModel")
 const app = express()
 
 const cors = require('cors');
@@ -67,6 +68,12 @@ app.get('/api/v1/pokemons', auth, asyncWrapper (async (req, res) => { // - get a
 
     const result = await pokemonModel.find().skip(req.query.after).limit(req.query.count);
 
+    await apiRequestModel.create({
+        request: "/api/v1/pokemons",
+        status: 200,
+        token: req.headers.token
+    });
+
     if (result.length === 0) {
         throw new PokemonNotFoundError(`No pokemon found with current filter values`);
     }
@@ -89,10 +96,10 @@ app.get('/api/v1/pokemon/:id', auth, asyncWrapper(async (req, res) => { // - get
 
 const adminAuth = asyncWrapper(async (req, res, next) => {
     try {
-        if (!req.query.appid) {
+        if (!req.headers.token) {
             throw new PokemonBadRequest("Need token")
         }
-        const token = req.query.appid;
+        const token = req.headers.token;
         const user = await userModel.findOne({ token });
         if (!user) {
             throw new PokemonBadRequest("Invalid token used to access protected route");
@@ -107,6 +114,16 @@ const adminAuth = asyncWrapper(async (req, res, next) => {
 })
 
 app.use(adminAuth)
+
+app.get('/api/v1/requests', asyncWrapper (async (req, res) => { // - create a new pokemon
+    const data = await apiRequestModel.find();
+    res.json(data);
+}))
+
+app.get('/api/v1/uniqueRequests', asyncWrapper (async (req, res) => { // - create a new pokemon
+    const data = await apiRequestModel.find().distinct('token');
+    res.json(data);
+}))
 
 app.post('/api/v1/pokemon', asyncWrapper (async (req, res) => { // - create a new pokemon
     await pokemonModel.create(req.body);
@@ -151,7 +168,12 @@ app.get('/api/doc', asyncWrapper((req, res) => {
     res.sendFile(path.join(__dirname, '/docs.html'))
 }))
 
-app.all('*', (req, res) => {
+app.all('*', async (req, res) => {
+    await apiRequestModel.create({
+        request: "bad request",
+        status: 404,
+        token: req.headers.token
+    });
     res.status(404).json({msg: "Improper request"});
 })
 
