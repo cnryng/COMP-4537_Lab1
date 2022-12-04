@@ -53,6 +53,9 @@ function PokemonImage({ pokemon }) {
             </tr>
             </tbody>
           </Table>
+          <img
+              src={`https://github.com/fanzeyi/pokemon.json/raw/master/images/${getThreeDigitId(pokemon.id)}.png`}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
