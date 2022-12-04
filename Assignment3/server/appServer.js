@@ -43,6 +43,11 @@ app.use(express.json())
 const auth = asyncWrapper(async (req, res, next)  => {
     try {
         if (!req.headers.token) {
+            await apiRequestModel.create({
+                request: "Need token",
+                status: 404,
+                token: req.headers.token
+            });
             throw new PokemonBadRequest("Need token")
         }
         console.log(req.headers);
@@ -51,10 +56,20 @@ const auth = asyncWrapper(async (req, res, next)  => {
         const user = await userModel.findOne({ token });
         console.log(user);
         if (!user) {
+            await apiRequestModel.create({
+                request: "Invalid token used to access protected route",
+                status: 404,
+                token: req.headers.token
+            });
             throw new PokemonBadRequest("Invalid token used to access protected route");
         }
         next()
     } catch (err) {
+        await apiRequestModel.create({
+            request: err.message,
+            status: 404,
+            token: req.headers.token
+        });
         throw new PokemonBadRequest(err.message)
     }
 })
@@ -111,14 +126,29 @@ app.get('/api/v1/isAdmin', asyncWrapper (async (req, res) => {
 const adminAuth = asyncWrapper(async (req, res, next) => {
     try {
         if (!req.headers.token) {
+            await apiRequestModel.create({
+                request: "Need token",
+                status: 404,
+                token: req.headers.token
+            });
             throw new PokemonBadRequest("Need token")
         }
         const token = req.headers.token;
         const user = await userModel.findOne({ token });
         if (!user) {
+            await apiRequestModel.create({
+                request: "Invalid token used to access protected route",
+                status: 404,
+                token: req.headers.token
+            });
             throw new PokemonBadRequest("Invalid token used to access protected route");
         }
         if (!user.isAdmin) {
+            await apiRequestModel.create({
+                request: "Cannot access admin protected route",
+                status: 404,
+                token: req.headers.token
+            });
             throw new PokemonBadRequest("Cannot access admin protected route");
         }
         next()
