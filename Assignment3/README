@@ -1,0 +1,4 @@
+Start apps in the following order:
+1. authServer (port 5000)
+2. appServer (port 5001)
+3. React frontend server (port 3000)
