@@ -67,10 +67,12 @@ app.get('/api/v1/pokemons', auth, asyncWrapper (async (req, res) => { // - get a
     }
 
     const result = await pokemonModel.find().skip(req.query.after).limit(req.query.count);
+    const user = await userModel.findOne({ token: req.headers.token });
 
     await apiRequestModel.create({
         request: "/api/v1/pokemons",
         status: 200,
+        username: user.username,
         token: req.headers.token
     });
 
@@ -94,6 +96,18 @@ app.get('/api/v1/pokemon/:id', auth, asyncWrapper(async (req, res) => { // - get
 
 }))
 
+app.get('/api/v1/isAdmin', asyncWrapper (async (req, res) => {
+    const data = await userModel.find({
+        token: req.headers.token,
+        isAdmin: true
+    });
+    console.log(data);
+    if (data.length === 0) {
+        res.send(false);
+    }
+    res.send(true);
+}))
+
 const adminAuth = asyncWrapper(async (req, res, next) => {
     try {
         if (!req.headers.token) {
@@ -115,13 +129,23 @@ const adminAuth = asyncWrapper(async (req, res, next) => {
 
 app.use(adminAuth)
 
-app.get('/api/v1/requests', asyncWrapper (async (req, res) => { // - create a new pokemon
-    const data = await apiRequestModel.find();
+app.get('/api/v1/uniqueRequests', asyncWrapper (async (req, res) => {
+    const data = await apiRequestModel.find().distinct('token');
     res.json(data);
 }))
 
-app.get('/api/v1/uniqueRequests', asyncWrapper (async (req, res) => { // - create a new pokemon
+app.get('/api/v1/mostRequests', asyncWrapper (async (req, res) => {
     const data = await apiRequestModel.find().distinct('token');
+    res.json(data);
+}))
+
+app.get('/api/v1/400requests', asyncWrapper (async (req, res) => {
+    const data = await apiRequestModel.find({
+        status: {
+            $lt: 500,
+            $gte: 400
+        }
+    }).count();
     res.json(data);
 }))
 
